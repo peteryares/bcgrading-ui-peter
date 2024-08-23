@@ -10,9 +10,9 @@
     onMount(() => {
         const token = localStorage.getItem('jwtToken');
 
-        // If there's no token, redirect to login
         if (!token) {
-            unauthorizedAccess("No token found, redirecting to login.");
+            // No token found, redirect to login page
+            goto('/login');
             return;
         }
 
@@ -23,12 +23,12 @@
             const userRole = decodedToken.role;
             console.log("User Role:", userRole); // Debugging line
 
-            // Check if the user has the correct role to access the admin page
+            // Check if the user has the correct role to access the page
             if (userRole !== 'Admin') {
+                // Unauthorized access, redirect to Admin page
                 unauthorizedAccess(`Role '${userRole}' does not have access to this page.`);
             }
         } catch (error) {
-            // Handle potential errors in decoding or missing role in token
             console.error("Error decoding token:", error);
             unauthorizedAccess("Error decoding token, redirecting to login.");
         }
@@ -41,7 +41,7 @@
             countdown--;
             if (countdown <= 0) {
                 clearInterval(interval);
-                goto('/login');
+                goto('/admin');  // Redirect to Admin page instead of logout
             }
         }, 1000);
     }
@@ -62,7 +62,7 @@
 <div class="popup" in:fade>
     <div class="popup-content">
         <p>Access Unauthorized. Try again </p>
-        <p>Redirecting you to the login page in {countdown} seconds...</p>
+        <p>Redirecting you to the Admin page in {countdown} seconds...</p>
     </div>
 </div>
 {/if}
