@@ -3,6 +3,7 @@
     import { goto } from '$app/navigation';
     import { fade } from 'svelte/transition';
 
+ 
     let showUnauthorizedMessage = false;
     let countdown = 5;
 
@@ -19,21 +20,21 @@
             }, 1000);
         }
 
-        // Validate token and check if user is admin
+        // Validate token and check if user is tteacher
         // Implement a function to check role based on the token
     });
 
     function logout() {
-        localStorage.removeItem('jwtToken');  // Clear the JWT token
-        goto('/login');  // Redirect to the login page
+        localStorage.removeItem('jwtToken');
+        goto('/login');
     }
 </script>
 
-<h1>Admin Dashboard</h1>
-<p>Welcome, Admin!</p>
+<h1>Teacher Dashboard</h1>
+<p>Welcome, Teacher!</p>
 
-<!-- Add a logout button -->
 <button on:click={logout}>Logout</button>
+
 
 {#if showUnauthorizedMessage}
 <div class="popup" in:fade>
@@ -64,5 +65,6 @@
         background-color: rgba(255, 255, 255, 0.1);
         border-radius: 8px;
         text-align: center;
+        font-size: large;
     }
 </style>

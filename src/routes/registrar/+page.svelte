@@ -29,8 +29,8 @@
     }
 </script>
 
-<h1>Admin Dashboard</h1>
-<p>Welcome, Admin!</p>
+<h1>Registrar Dashboard</h1>
+<p>Welcome, registrar!</p>
 
 <!-- Add a logout button -->
 <button on:click={logout}>Logout</button>

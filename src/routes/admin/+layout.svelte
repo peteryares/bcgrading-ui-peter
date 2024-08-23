@@ -8,7 +8,7 @@
 <div class="app-container">
   <nav class="navbar navbar-expand navbar-dark bg-dark">
     <div class="navbar-nav">
-    <a class="nav-item nav-link text-white" href="/">Home</a>
+    <a class="nav-item nav-link text-white" href="/admin">ADMIN ACCOUNT</a>
     <a class="nav-item nav-link text-white" href="/years">SchoolYear</a>
     <a class="nav-item nav-link text-white" href="/settings">Settings</a>
   </div>
