@@ -8,7 +8,7 @@
     let countdown = 5;
     let redirectMessage = '';
     let userRole = '';
-    let showLogoutConfirm = false;
+    
     onMount(() => {
         const token = localStorage.getItem('jwtToken');
 
@@ -54,40 +54,12 @@
         }, 1000);
     }
 
-    function logout() {
-    localStorage.removeItem('jwtToken');  // Clear the JWT token
-    goto('/login');  // Redirect to the login page immediately
-}
-
-function showConfirmLogout() {
-        showLogoutConfirm = true;
-    }
-
-    function confirmLogout() {
-        showLogoutConfirm = false;
-        logout();
-    }
-
-    function cancelLogout() {
-        showLogoutConfirm = false;
-    }
 </script>
 
-<h1>Admin Dashboard</h1>
+<h1>Admin ACCOUNT</h1>
 <p>Welcome, Admin!</p>
 
 
-<button on:click={showConfirmLogout}>Logout</button>
-
-{#if showLogoutConfirm}
-<div class="popup" in:fade>
-    <div class="popup-content">
-        <p>Are you sure you want to log out?</p>
-        <button on:click={confirmLogout}>Yes</button>
-        <button on:click={cancelLogout}>No</button>
-    </div>
-</div>
-{/if}
 
 {#if showUnauthorizedMessage}
 <div class="popup" in:fade>
@@ -120,22 +92,4 @@ function showConfirmLogout() {
         text-align: center;
     }
 
-    .popup-content button {
-        margin: 5px;
-        padding: 10px 20px;
-        font-size: 16px;
-        border: none;
-        border-radius: 1px;
-        cursor: pointer;
-    }
-
-    .popup-content button:first-of-type {
-        background-color: #4CAF50; /* Green for Yes */
-        color: white;
-    }
-
-    .popup-content button:last-of-type {
-        background-color: #f44336; /* Red for No */
-        color: white;
-    }
 </style>
