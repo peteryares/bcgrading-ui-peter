@@ -1,7 +1,6 @@
-<!-- src/routes/+page.svelte -->
 <script>
-    // No additional logic needed for this simple landing page
-</script>
+    import 'bootstrap/dist/css/bootstrap.min.css';
+  </script>
 
 <main>
     <h1>Welcome to the School Management System</h1>
