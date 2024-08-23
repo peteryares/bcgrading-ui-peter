@@ -20,10 +20,10 @@
 
         try {
             const decodedToken = jwtDecode(token);
-            console.log("Decoded Token:", decodedToken); // Debugging line
+           
 
-            userRole = decodedToken.role;  // Save userRole for later use
-            console.log("User Role:", userRole); // Debugging line
+            userRole = decodedToken.role; 
+           
 
             // Check if the user has the correct role to access the page
             if (userRole !== 'Admin') {
@@ -32,7 +32,7 @@
                 unauthorizedAccess("Redirecting you to your role-specific page.");
             }
         } catch (error) {
-            console.error("Error decoding token:", error);
+           
             unauthorizedAccess("Error decoding token, redirecting to login.");
         }
     });
