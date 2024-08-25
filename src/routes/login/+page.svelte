@@ -20,7 +20,7 @@
             });
 
             if (!response.ok) {
-                throw new Error('Login failed');
+                throw new Error('incorrect username and/or passowrd :(');
             }
 
             const data = await response.json();
@@ -46,9 +46,7 @@
         }
     }
 </script>
-{#if error}
-    <p style="color: red">{error}</p>
-{/if}
+
 
 
 
@@ -91,8 +89,14 @@
           <input type="password" id="password" bind:value={password} required/>
           <label for="input" class="label">Password</label>
           <div class="underline"></div>
+   
         </div>
-
+      
+        <div class="input-container">
+            {#if error}
+          <p style="color: red">{error}</p>
+            {/if}
+        </div>
         <div class="button">
           <button type="submit" class="sign__in__button">Sign In</button>
         </div>

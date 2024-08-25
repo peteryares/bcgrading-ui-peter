@@ -56,8 +56,8 @@
 
 </script>
 
-<h1>Admin ACCOUNT</h1>
-<p>Welcome, Admin!</p>
+<h1 class="text-center">Admin ACCOUNT</h1>
+<p class="text-center">Welcome, Admin!</p>
 
 
 

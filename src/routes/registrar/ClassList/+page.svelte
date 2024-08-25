@@ -107,29 +107,110 @@
         }, 1000);
     }
 
-    function logout() {
-        localStorage.removeItem('jwtToken');  // Clear the JWT token
-        goto('/login');  // Redirect to the login page immediately
-    }
+    // function logout() {
+    //     localStorage.removeItem('jwtToken');  // Clear the JWT token
+    //     goto('/login');  // Redirect to the login page immediately
+    // }
 
-    function showConfirmLogout() {
-        showLogoutConfirm = true;
-    }
+    // // function showConfirmLogout() {
+    // //     showLogoutConfirm = true;
+    // // }
 
-    function confirmLogout() {
-        showLogoutConfirm = false;
-        logout();
-    }
+    // // function confirmLogout() {
+    // //     showLogoutConfirm = false;
+    // //     logout();
+    // // }
 
-    function cancelLogout() {
-        showLogoutConfirm = false;
-    }
+    // // function cancelLogout() {
+    // //     showLogoutConfirm = false;
+    // // }
 </script>
 
-<h1 class=" text-center">Registrar Dashboard</h1>
-<p class=" text-center">Welcome, Registrar!</p>
+
+<!-- {#if !error}
+    <ul>
+        {#each years as year}
+            <li>{year.year}</li>
+        {/each}
+    </ul>
+{/if} -->
+<div class="container text-center">
+<div class="btn-group me-2">
+    <button type="button" style="width: 160px !important;" class="btn dropdown-toggle border-dark" data-bs-toggle="dropdown" aria-expanded="false">
+      YEAR               
+    </button>
+    {#if !error}
+    <ul class="dropdown-menu" style="max-height: 200px; overflow-y: auto;">
+        {#each years as year}
+      <li class="bg-light border"><a class="dropdown-item " href="/">{year.year}</a></li>
+      {/each}
+
+      
+    </ul>
+    {/if}
+  </div>
+
+{#if !error}
+<div class="btn-group  me-2">
+    <button type="button" style="width: 160px !important;" class="btn dropdown-toggle border-dark" data-bs-toggle="dropdown">
+      SEMESTER               
+    </button>
+    <ul class="dropdown-menu" style="max-height: 200px; overflow-y: auto;">
+        {#each semesters as semester}
+        <li class="bg-light border">
+            <a class="dropdown-item" href="/">{semester.semester}</a>
+        </li>
+        {/each}
+    </ul>
+</div>
+{/if}
 
 
+{#if !error}
+<div class="btn-group ">
+    <button type="button" style="width: 500px !important;" class="btn dropdown-toggle border-dark" data-bs-toggle="dropdown">
+      SUBJECTS            
+    </button>
+    <ul class="dropdown-menu" style="max-height: 200px; overflow-y: auto;">
+        {#each subjects as subject}
+        <li class="bg-light border">
+            <a class="dropdown-item" href="/">{subject.subjectcode} - {subject.title}</a>
+        </li>
+        {/each}
+    </ul>
+</div>
+{/if}
+</div>
+<h2>Class List</h2>
+<table class="table table-bordered border border-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td colspan="2">Larry the Bird</td>
+        <td>@twitter</td>
+      </tr>
+    </tbody>
+  </table>
 
 <!-- Display error message if any -->
 {#if error}
