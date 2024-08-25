@@ -110,7 +110,7 @@
               <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/Accounts">View All users</a></li>
               <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/updateAccount">Update User Info</a></li>
               <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/updatePassword">Change Passwords</a></li>
-              <li><a bind:this={offcanvasElement} class="dropdown-item" href="/">Deactivate User</a></li>
+              <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/deleteAccount">Deactivate User</a></li>
               <li><a bind:this={offcanvasElement} class="dropdown-item" href="/">Reactivate User</a></li>
             
             </ul>
