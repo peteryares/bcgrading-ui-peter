@@ -135,7 +135,13 @@
           <td>{accountinfo.role}</td>
           <td>{accountinfo.created}</td>
           <td>{accountinfo.updated}</td>
-          <td>{accountinfo.isActive ? 'Active' : 'Inactive'}</td>
+          <td>
+            {#if accountinfo.isActive}
+              <p class="badge-lg text-center text-bg-success">Active</p>
+            {:else}
+              <p class="badge-lg text-center text-bg-danger">Inactive</p>
+            {/if}
+          </td>
           <td>
             <button 
               class="btn btn-primary" 

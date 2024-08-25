@@ -180,9 +180,9 @@
         <td>{accountinfo.updated}</td>
         <td>
           {#if accountinfo.isActive}
-            <span class="badge rounded-pill text-bg-success">Active</span>
+            <p class="badge-lg text-center text-bg-success">Active</p>
           {:else}
-            <span class="badge rounded-pill text-bg-danger">Inactive</span>
+            <p class="badge-lg text-center text-bg-danger">Inactive</p>
           {/if}
         </td>
         <td>
