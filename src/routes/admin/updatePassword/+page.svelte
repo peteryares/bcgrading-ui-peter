@@ -138,9 +138,7 @@
         <th>Created</th>
         <th>Updated</th>
         <th>Status</th>
-        <th>Edit</th>
         <th>Change Password</th>
-        <th>Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -153,20 +151,18 @@
           <td>{accountinfo.role}</td>
           <td>{accountinfo.created}</td>
           <td>{accountinfo.updated}</td>
-          <td>{accountinfo.isActive ? 'Active' : 'Inactive'}</td>
           <td>
-            <button 
-              class="btn btn-primary" 
-              data-bs-toggle="modal" 
-              data-bs-target="#editAccountModal"
-              on:click={() => selectedAccount.set(accountinfo)}
-            >
-              Edit
-            </button>
+            {#if accountinfo.isActive}
+              <span class="badge  text-bg-success">Active</span>
+            {:else}
+              <span class="badge  text-bg-danger">Inactive</span>
+            {/if}
           </td>
+          
+         
           <td>
             <button 
-              class="btn btn-secondary" 
+              class="btn btn-success" 
               data-bs-toggle="modal" 
               data-bs-target="#changePasswordModal"
               on:click={() => selectedAccount.set(accountinfo)}
@@ -174,10 +170,7 @@
               Change Password
             </button>
           </td>
-          <td>
-            <!-- Add your delete button logic here -->
-            <button class="btn btn-danger">Delete</button>
-          </td>
+          
         </tr>
       {/each}
     </tbody>
@@ -220,8 +213,9 @@
                     {/if}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                 
                 </div>
             </form>
         </div>
