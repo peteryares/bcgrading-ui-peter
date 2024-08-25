@@ -1,0 +1,247 @@
+<script>
+    import 'bootstrap/dist/css/bootstrap.min.css';
+    import { onMount } from 'svelte';
+    import { goto } from '$app/navigation';
+    import { fade } from 'svelte/transition';
+    import { jwtDecode } from 'jwt-decode';
+
+    let accounts = [];
+    let error = '';
+    let showUnauthorizedMessage = false;
+    let countdown = 5;
+    let redirectMessage = '';
+    let userRole = '';
+    const selectedAccount = writable(null);
+    let successMessage = ''; // New state for success message
+    let passwordError = ''; // New state for password error
+    let passwordSuccessMessage = ''; // New state for password success message
+
+    onMount(async () => {
+        await import('bootstrap/dist/js/bootstrap.bundle.min.js');
+
+        const token = localStorage.getItem('jwtToken');
+        if (!token) {
+            unauthorizedAccess("No token found, redirecting to login.");
+            return;
+        }
+
+        try {
+            const decodedToken = jwtDecode(token);
+            userRole = decodedToken.role;
+
+            if (userRole !== 'Admin') {
+                redirectMessage = `Role '${userRole}' does not have access to this page.`;
+                unauthorizedAccess("Redirecting you to your role-specific page.");
+                return;
+            }
+
+            const userlist = await fetch('http://localhost:4000/admin', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (userlist.ok) {
+                accounts = await userlist.json();
+            } else {
+                error = `Failed to fetch accounts: ${userlist.statusText}`;
+            }
+        } catch (error) {
+            unauthorizedAccess("Error decoding token, redirecting to login.");
+        }
+    });
+
+    function unauthorizedAccess(message) {
+        console.error(message);
+        showUnauthorizedMessage = true;
+        redirectMessage = message;
+        const interval = setInterval(() => {
+            countdown--;
+            if (countdown <= 0) {
+                clearInterval(interval);
+                if (redirectMessage.includes("login")) {
+                    goto('/login');
+                } else {
+                    goto(`/${userRole}`);
+                }
+            }
+        }, 1000);
+    }
+
+    async function changePassword(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const accountId = ($selectedAccount && $selectedAccount.id) || null;
+
+        if (!accountId) {
+            console.error("Account ID is not available.");
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:4000/admin/updatepassword${accountId}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(Object.fromEntries(formData))
+            });
+
+            if (response.ok) {
+                passwordSuccessMessage = 'Password change successful!'; // Set the success message
+                const modal = document.getElementById('changePasswordModal');
+                const bsModal = bootstrap.Modal.getInstance(modal);
+                setTimeout(() => bsModal.hide(), 1000); // Hide modal after a short delay
+            } else {
+                passwordError = `Failed to change password: ${response.statusText}`;
+            }
+        } catch (error) {
+            passwordError = `Error changing password: ${error.message}`;
+        }
+    }
+</script>
+
+
+
+<h1>Accounts</h1>
+{#if !error}
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Username</th>
+        <th>Role</th>
+        <th>Created</th>
+        <th>Updated</th>
+        <th>Status</th>
+        <th>Edit</th>
+        <th>Change Password</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {#each accounts as accountinfo}
+        <tr>
+          <td>{accountinfo.id}</td>
+          <td>{accountinfo.firstName}</td>
+          <td>{accountinfo.lastName}</td>
+          <td>{accountinfo.username}</td>
+          <td>{accountinfo.role}</td>
+          <td>{accountinfo.created}</td>
+          <td>{accountinfo.updated}</td>
+          <td>{accountinfo.isActive ? 'Active' : 'Inactive'}</td>
+          <td>
+            <button 
+              class="btn btn-primary" 
+              data-bs-toggle="modal" 
+              data-bs-target="#editAccountModal"
+              on:click={() => selectedAccount.set(accountinfo)}
+            >
+              Edit
+            </button>
+          </td>
+          <td>
+            <button 
+              class="btn btn-secondary" 
+              data-bs-toggle="modal" 
+              data-bs-target="#changePasswordModal"
+              on:click={() => selectedAccount.set(accountinfo)}
+            >
+              Change Password
+            </button>
+          </td>
+          <td>
+            <!-- Add your delete button logic here -->
+            <button class="btn btn-danger">Delete</button>
+          </td>
+        </tr>
+      {/each}
+    </tbody>
+  </table>
+{/if}
+
+{#if showUnauthorizedMessage}
+<div class="popup" in:fade>
+    <div class="popup-content">
+        <p>{redirectMessage}</p>
+        <p>Redirecting you in {countdown} seconds...</p>
+    </div>
+</div>
+{/if}
+
+<!-- Bootstrap Modal for Changing Password -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      {#if $selectedAccount}
+      <form id="changePasswordForm" on:submit={changePassword}>
+        <div class="modal-body">
+          <input type="hidden" name="id" value="{$selectedAccount.id}">
+          <div class="mb-3">
+            <label for="password" class="form-label">New Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+          </div>
+          <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+      {/if}
+      {#if passwordError}
+      <div class="alert alert-danger" role="alert">
+        {passwordError}
+      </div>
+      {/if}
+      {#if passwordSuccessMessage}
+      <div class="alert alert-success" role="alert">
+        {passwordSuccessMessage}
+      </div>
+      {/if}
+    </div>
+  </div>
+</div>
+
+<!-- Error message if any -->
+{#if error}
+    <p>{error}</p>
+{/if}
+
+<style>
+    .popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .popup-content {
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .alert {
+        margin-top: 10px;
+    }
+</style>
+

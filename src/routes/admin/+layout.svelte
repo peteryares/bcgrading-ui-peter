@@ -9,6 +9,9 @@
   let bootstrap;  // Variable to hold the imported Bootstrap module
   let showLogoutConfirm = false;
 
+
+  
+
   // Function to handle closing offcanvas
   function closeOffcanvas() {
     if (offcanvasElement && bootstrap) {
@@ -72,6 +75,8 @@
       });
     }
   });
+
+  
 </script>
 
 <nav class="navbar navbar-dark bg-dark fixed-top custom-navbar-size">
@@ -102,11 +107,11 @@
               Manage User Accounts
             </a>
             <ul class="dropdown-menu dropdown-menu-dark">
-              <li><a class="dropdown-item" href="/Admin">View All users</a></li>
-              <li><a class="dropdown-item" href="/Admin">Update User Info</a></li>
-              <li><a class="dropdown-item" href="/Admin">Change Passwords</a></li>
-              <li><a class="dropdown-item" href="/">Deactivate User</a></li>
-              <li><a class="dropdown-item" href="/">Reactivate User</a></li>
+              <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/Accounts">View All users</a></li>
+              <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/updateAccount">Update User Info</a></li>
+              <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/updatePassword">Change Passwords</a></li>
+              <li><a bind:this={offcanvasElement} class="dropdown-item" href="/">Deactivate User</a></li>
+              <li><a bind:this={offcanvasElement} class="dropdown-item" href="/">Reactivate User</a></li>
             
             </ul>
           </li>
@@ -129,12 +134,10 @@
   <nav class="navbar navbar-expand navbar-dark bg-dark hover">
     <div class="container">
       <div class="navbar-nav me-auto">
-        <a class="nav-item nav-link text-white" href="/Admin">ADMIN ACCOUNT</a>
-        <a class="nav-item nav-link text-white" href="/Admin/addAccount/">Add Account</a>
-        <a class="nav-item nav-link text-white" href="/settings">Settings</a>
+   
       </div>
       <div class="navbar-nav ms-auto">
-        <button class="nav-item nav-link text-white" on:click={showConfirmLogout}>LOGOUT</button>
+        <button class="nav-item nav-link text-white">LHAHAHAHA</button>
       </div>
     </div>
   </nav>
