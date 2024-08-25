@@ -4,6 +4,7 @@
     import { goto } from '$app/navigation';
     import { fade } from 'svelte/transition';
     import { jwtDecode } from 'jwt-decode';
+    import { writable } from 'svelte/store'; // Import writable from svelte/store
 
     let accounts = [];
     let error = '';
@@ -11,13 +12,15 @@
     let countdown = 5;
     let redirectMessage = '';
     let userRole = '';
-    const selectedAccount = writable(null);
-    let successMessage = ''; // New state for success message
+    const selectedAccount = writable(null); // Initialize writable store
     let passwordError = ''; // New state for password error
     let passwordSuccessMessage = ''; // New state for password success message
+   
+    let bootstrap;
 
     onMount(async () => {
-        await import('bootstrap/dist/js/bootstrap.bundle.min.js');
+        const bootstrapModule = await import('bootstrap/dist/js/bootstrap.bundle.min.js');
+        bootstrap = bootstrapModule.default;
 
         const token = localStorage.getItem('jwtToken');
         if (!token) {
@@ -79,7 +82,7 @@
         }
 
         try {
-            const response = await fetch(`http://localhost:4000/admin/updatepassword${accountId}`, {
+            const response = await fetch(`http://localhost:4000/admin/updatepassword/${accountId}`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
@@ -92,7 +95,21 @@
                 passwordSuccessMessage = 'Password change successful!'; // Set the success message
                 const modal = document.getElementById('changePasswordModal');
                 const bsModal = bootstrap.Modal.getInstance(modal);
-                setTimeout(() => bsModal.hide(), 1000); // Hide modal after a short delay
+                setTimeout(() => bsModal.hide(), 500); // Hide modal after a short delay
+
+
+
+                modal.addEventListener('hidden.bs.modal', () => {
+            const form = modal.querySelector('form');
+            if (form) {
+                form.reset(); // Reset form fields
+            }
+            // Optionally, clear success and error messages
+            passwordSuccessMessage = '';
+            passwordError = '';
+        });
+
+
             } else {
                 passwordError = `Failed to change password: ${response.statusText}`;
             }
@@ -100,8 +117,12 @@
             passwordError = `Error changing password: ${error.message}`;
         }
     }
-</script>
 
+
+   
+
+
+</script>
 
 
 <h1>Accounts</h1>
@@ -173,45 +194,41 @@
 {/if}
 
 <!-- Bootstrap Modal for Changing Password -->
+<!-- Modal HTML -->
 <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      {#if $selectedAccount}
-      <form id="changePasswordForm" on:submit={changePassword}>
-        <div class="modal-body">
-          <input type="hidden" name="id" value="{$selectedAccount.id}">
-          <div class="mb-3">
-            <label for="password" class="form-label">New Password</label>
-            <input type="password" class="form-control" id="password" name="password" required>
-          </div>
-          <div class="mb-3">
-            <label for="confirmPassword" class="form-label">Confirm Password</label>
-            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
-          </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form on:submit={changePassword}>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="password" class="form-label">New Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                    </div>
+                    {#if passwordError}
+                        <div class="alert alert-danger">{passwordError}</div>
+                    {/if}
+                    {#if passwordSuccessMessage}
+                        <div class="alert alert-success">{passwordSuccessMessage}</div>
+                    {/if}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
-        </div>
-      </form>
-      {/if}
-      {#if passwordError}
-      <div class="alert alert-danger" role="alert">
-        {passwordError}
-      </div>
-      {/if}
-      {#if passwordSuccessMessage}
-      <div class="alert alert-success" role="alert">
-        {passwordSuccessMessage}
-      </div>
-      {/if}
     </div>
-  </div>
 </div>
+
+<!-- Success message after update -->
 
 <!-- Error message if any -->
 {#if error}
@@ -244,4 +261,3 @@
         margin-top: 10px;
     }
 </style>
-
