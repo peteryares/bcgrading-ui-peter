@@ -8,12 +8,15 @@
     let years = [];
     let semesters = [];
     let subjects = [];
+    let classes = [];
     let error = '';
     let showUnauthorizedMessage = false;
     let countdown = 5;
     let redirectMessage = '';
     let userRole = '';
     let showLogoutConfirm = false;
+
+   
 
     onMount(async () => {
 
@@ -40,6 +43,10 @@
                 unauthorizedAccess("Redirecting you to your role-specific page.");
                 return;
             }
+
+
+          
+
 
             // Fetch the years if the user is authorized
             const yearlist = await fetch('http://localhost:4000/registrar/years', {
@@ -81,14 +88,76 @@
             }
 
             
+            const classlist = await fetch('http://localhost:4000/registrar', {
+                headers: {
+                    'Authorization': `Bearer ${token}` // Include JWT token
+                }
+            });
+
+            if (classlist.ok) {
+                classes = await classlist.json();
+            } else {
+                error = `Failed to fetch classLIST: ${classlist.statusText}`;
+            }
+
+           
 
         
         } catch (error) {
+            console.error('Error:', error); // Log the entire error object
+
+            console.log(userRole)
             unauthorizedAccess("Error decoding token, redirecting to login.");
         }
 
            
     });
+
+    let filteredClasses = [];
+   
+    let selectedYear = '';
+    let selectedSemester = '';
+    let selectedSubject = '';
+
+    function filterClasses() {
+    console.log('Selected Year:', selectedYear);
+    console.log('Selected Semester:', selectedSemester);
+    console.log('Selected Subject:', selectedSubject);
+
+    if (selectedYear === '' && selectedSemester === '' && selectedSubject === '') {
+        filteredClasses = [...classes];
+    } else {
+        filteredClasses = classes.filter(cls => {
+            return (
+                (selectedYear === '' || cls.year === selectedYear) &&
+                (selectedSemester === '' || cls.semester === selectedSemester) &&
+                (selectedSubject === '' || cls.subjectcode === selectedSubject)
+            );
+        });
+    }
+
+    console.log('Filtered Classes:', filteredClasses);
+}
+
+
+    function handleYearSelect(year) {
+        console.log('Year selected:', year);
+        selectedYear = year;
+        filterClasses();
+    }
+
+    function handleSemesterSelect(semester) {
+        console.log('Semester selected:', semester);
+        selectedSemester = semester;
+        filterClasses();
+    }
+
+    function handleSubjectSelect(subject) {
+        console.log('Subject selected:', subject);
+        selectedSubject = subject;
+        filterClasses();
+    }
+
 
     function unauthorizedAccess(message) {
         console.error(message); // Debugging line
@@ -107,127 +176,166 @@
         }, 1000);
     }
 
-    // function logout() {
-    //     localStorage.removeItem('jwtToken');  // Clear the JWT token
-    //     goto('/login');  // Redirect to the login page immediately
-    // }
+    function clearFilters() {
+    selectedYear = '';
+    selectedSemester = '';
+    selectedSubject = '';
+    filterClasses();
+}
 
-    // // function showConfirmLogout() {
-    // //     showLogoutConfirm = true;
-    // // }
 
-    // // function confirmLogout() {
-    // //     showLogoutConfirm = false;
-    // //     logout();
-    // // }
 
-    // // function cancelLogout() {
-    // //     showLogoutConfirm = false;
-    // // }
 </script>
 
-
-<!-- {#if !error}
-    <ul>
-        {#each years as year}
-            <li>{year.year}</li>
-        {/each}
-    </ul>
-{/if} -->
 <div class="container text-center">
-<div class="btn-group me-2">
-    <button type="button" style="width: 160px !important;" class="btn dropdown-toggle border-dark" data-bs-toggle="dropdown" aria-expanded="false">
-      YEAR               
-    </button>
-    {#if !error}
-    <ul class="dropdown-menu" style="max-height: 200px; overflow-y: auto;">
-        {#each years as year}
-      <li class="bg-light border"><a class="dropdown-item " href="/">{year.year}</a></li>
-      {/each}
-
-      
-    </ul>
-    {/if}
-  </div>
-
-{#if !error}
-<div class="btn-group  me-2">
-    <button type="button" style="width: 160px !important;" class="btn dropdown-toggle border-dark" data-bs-toggle="dropdown">
-      SEMESTER               
-    </button>
-    <ul class="dropdown-menu" style="max-height: 200px; overflow-y: auto;">
-        {#each semesters as semester}
-        <li class="bg-light border">
-            <a class="dropdown-item" href="/">{semester.semester}</a>
-        </li>
-        {/each}
-    </ul>
-</div>
-{/if}
-
-
-{#if !error}
-<div class="btn-group ">
-    <button type="button" style="width: 500px !important;" class="btn dropdown-toggle border-dark" data-bs-toggle="dropdown">
-      SUBJECTS            
-    </button>
-    <ul class="dropdown-menu" style="max-height: 200px; overflow-y: auto;">
-        {#each subjects as subject}
-        <li class="bg-light border">
-            <a class="dropdown-item" href="/">{subject.subjectcode} - {subject.title}</a>
-        </li>
-        {/each}
-    </ul>
-</div>
-{/if}
-</div>
-<h2>Class List</h2>
-<table class="table table-bordered border border-dark">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
-      </tr>
-    </tbody>
-  </table>
-
-<!-- Display error message if any -->
-{#if error}
-    <p>{error}</p>
-{/if}
-
-<!-- <button on:click={showConfirmLogout}>Logout</button> -->
-
-<!-- {#if showLogoutConfirm}
-<div class="popup" in:fade>
-    <div class="popup-content">
-        <p>Are you sure you want to log out?</p>
-        <button on:click={confirmLogout}>Yes</button>
-        <button on:click={cancelLogout}>No</button>
+    <div class="btn-group me-2">
+        <button type="button" style="width: 160px !important;" class="btn dropdown-toggle border-dark" data-bs-toggle="dropdown" aria-expanded="false">
+        YEAR:  {selectedYear}            
+        </button>
+        <ul class="dropdown-menu" style="max-height: 200px; overflow-y: auto;">
+            {#each years as year}
+            <li class="bg-light border"><button class="dropdown-item" on:click={() => handleYearSelect(year.year)}>{year.year}</button></li>
+            {/each}
+        </ul>
     </div>
+
+    <div class="btn-group me-2">
+        <button type="button" style="width: 190px !important;" class="btn dropdown-toggle border-dark" data-bs-toggle="dropdown">
+        SEMESTER:  {selectedSemester}          
+        </button>
+        <ul class="dropdown-menu" style="max-height: 200px; overflow-y: auto; width: 190px !important;">
+            {#each semesters as semester}
+            <li class="bg-light border">
+                <button class="dropdown-item" on:click={() => handleSemesterSelect(semester.semester)}>{semester.semester}</button>
+            </li>
+            {/each}
+        </ul>
+    </div>
+
+    <div class="btn-group">
+        <button type="button" style="width: 500px !important;" class="btn dropdown-toggle border-dark" data-bs-toggle="dropdown">
+         SUBJECT: {selectedSubject}           
+        </button>
+        <ul class="dropdown-menu" style="max-height: 200px; overflow-y: auto; width: 500px !important;">
+            {#each subjects as subject}
+            <li class="bg-light border">
+                <button class="dropdown-item" on:click={() => handleSubjectSelect(subject.subjectcode)}>{subject.subjectcode} - {subject.title}</button>
+            </li>
+            {/each}
+        </ul>
+    </div>
+    <button type="button" class="btn text-white btn-dark" on:click={clearFilters}>Clear Filters <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+      </svg></button>
 </div>
-{/if} -->
+
+
+
+
+
+
+<h2>Class List</h2>
+
+
+
+<!-- {#if !error} -->
+{#if !error}
+    {#if selectedYear === '' && selectedSemester === '' && selectedSubject === ''}
+        <!-- Show entire table if no filters are selected -->
+        <div style="max-height: 73vh; overflow-y: auto;">
+        <table class="table table-bordered" style="width: 100% !important;">
+            <thead>
+                <tr>
+                    <th>Class ID</th>
+                    <th>Subject Code</th>
+                    <th>Year</th>
+                    <th>Semester</th>
+                    <th>Teacher ID</th>
+                    <th>Created</th>
+                    <th>Updated</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {#each classes as classlist}
+                <tr>
+                    <td>{classlist.classid}</td>
+                    <td>{classlist.subjectcode}</td>
+                    <td>{classlist.year}</td>
+                    <td>{classlist.semester}</td>
+                    <td>{classlist.teacherid}</td>
+                    <td>{classlist.created}</td>
+                    <td>{classlist.updated}</td>
+                    <td>
+                        {#if classlist.isActive}
+                            <p class="badge-lg text-center text-bg-success">Active</p>
+                        {:else}
+                            <p class="badge-lg text-center text-bg-danger">Inactive</p>
+                        {/if}
+                    </td>
+                </tr>
+                {/each}
+            </tbody>
+        </table>
+        </div>
+    {:else}
+        {#if filteredClasses.length > 0}
+            <!-- Show filtered table if there are results -->
+            <div style="max-height: 73vh; overflow-y: auto;">
+                <table class="table table-bordered" style="width: 100% !important;">
+                <thead>
+                    <tr>
+                        <th>Class ID</th>
+                        <th>Subject Code</th>
+                        <th>Year</th>
+                        <th>Semester</th>
+                        <th>Teacher ID</th>
+                        <th>Created</th>
+                        <th>Updated</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {#each filteredClasses as classlist}
+                    <tr>
+                        <td>{classlist.classid}</td>
+                        <td>{classlist.subjectcode}</td>
+                        <td>{classlist.year}</td>
+                        <td>{classlist.semester}</td>
+                        <td>{classlist.teacherid}</td>
+                        <td>{classlist.created}</td>
+                        <td>{classlist.updated}</td>
+                        <td>
+                            {#if classlist.isActive}
+                                <p class="badge-lg text-center text-bg-success">Active</p>
+                            {:else}
+                                <p class="badge-lg text-center text-bg-danger">Inactive</p>
+                            {/if}
+                        </td>
+                    </tr>
+                    {/each}
+                </tbody>
+            </table>
+            </div>
+        {:else}
+            <h1 class="text-center">No classes found </h1>
+        {/if}
+    {/if}
+{/if}
+
+<!-- {/if} -->
+
+
+
+
+<!-- <td>
+    {#if classlist.isActive}
+        <p class="badge-lg text-center text-bg-success">Active</p>
+    {:else}
+        <p class="badge-lg text-center text-bg-danger">Inactive</p>
+    {/if}
+</td> -->
+
 
 {#if showUnauthorizedMessage}
 <div class="popup" in:fade>
@@ -236,6 +344,11 @@
         <p>Redirecting you in {countdown} seconds...</p>
     </div>
 </div>
+{/if}
+
+
+{#if error}
+    <p>{error}</p>
 {/if}
 
 <style>

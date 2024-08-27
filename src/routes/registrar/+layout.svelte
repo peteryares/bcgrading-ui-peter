@@ -102,9 +102,9 @@
               <a class="nav-link active" href="/Registrar">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/Admin/ClassList/">List of Classes </a>
+              <a class="nav-link" href="/Registrar/ClassList/">List of Classes </a>
             </li>
-            <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Manage User Accounts
               </a>
@@ -116,21 +116,8 @@
                 <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/reactivateAccount">Restore User</a></li>
               
               </ul>
-            </li>
+            </li> -->
   
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Classes or subject lists
-              </a>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin">View All Subjects</a></li>
-                <!-- <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/updateAccount">Update User Info</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/updatePassword">Change Passwords</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/deleteAccount">Deactivate User</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/reactivateAccount">Restore User</a></li> -->
-              
-              </ul>
-            </li>
   
             <li>
               <hr class="dropdown-divider">

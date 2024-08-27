@@ -98,12 +98,12 @@
       
         <div class="input-container">
           <input type="text" id="username" bind:value={username} required />
-          <label for="input" class="label">Username</label>
+          <label for="username" class="label">Username</label>
           <div class="underline"></div>
         </div>
         <div class="input-container">
           <input type="password" id="password" bind:value={password} required/>
-          <label for="input" class="label">Password</label>
+          <label for="password" class="label">Password</label>
           <div class="underline"></div>
    
         </div>
