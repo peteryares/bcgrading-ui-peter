@@ -7,9 +7,7 @@
   
     let offcanvasElement;
     let bootstrap;  // Variable to hold the imported Bootstrap module
-    // let showLogoutConfirm = false;
-    // on:click={showConfirmLogout}
-  
+    let showLogoutConfirm = false;
     
   
     // Function to handle closing offcanvas
@@ -26,9 +24,9 @@
     $: $page.url, closeOffcanvas();
   
     // Function to show confirmation popup for logout
-    // function showConfirmLogout() {
-    //   showLogoutConfirm = true;
-    // }
+    function showConfirmLogout() {
+      showLogoutConfirm = true;
+    }
   
     // Function to handle logout
     function logout() {
@@ -37,16 +35,15 @@
     }
   
     // Function to confirm logout
-    // function confirmLogout() {
-    //   showLogoutConfirm = false;
-    //   closeOffcanvas();
-    //   logout();
-    // }
+    function confirmLogout() {
+      showLogoutConfirm = false;
+      logout();
+    }
   
-    // // Function to cancel logout
-    // function cancelLogout() {
-    //   showLogoutConfirm = false;
-    // }
+    // Function to cancel logout
+    function cancelLogout() {
+      showLogoutConfirm = false;
+    }
   
     // Use onMount to handle client-side operations
     onMount(async () => {
@@ -76,8 +73,6 @@
         });
       }
     });
-  
-    
   </script>
   
   <nav class="navbar navbar-dark bg-dark fixed-top custom-navbar-size">
@@ -88,46 +83,33 @@
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
-      <p class="navbar-brand"> profile</p>
+      <p class="navbar-brand">something</p>
+      <p class="navbar-brand">pwede butang logout diri</p>
       
       <!-- Offcanvas Menu -->
       <div bind:this={offcanvasElement} class="offcanvas offcanvas-start text-bg-dark custom-offcanvas-size" tabindex="-1" id="offcanvasDarkNavbar">
         <div class="offcanvas-header">
-          <h5 class="navbar-brand">ADMIN PAGE</h5>
+          <h5 class="navbar-brand">Registrar Page</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
-              <a class="nav-link active" href="/Registrar">Home</a>
+              <a class="nav-link active" href="/Admin">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/Admin/ClassList/">List of Classes </a>
+              <a class="nav-link" href="/Admin/addAccount/">Add user</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Manage User Accounts
               </a>
               <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/Accounts">View All users</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/updateAccount">Update User Info</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/updatePassword">Change Passwords</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/deleteAccount">Deactivate User</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/reactivateAccount">Restore User</a></li>
-              
-              </ul>
-            </li>
-  
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Classes or subject lists
-              </a>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin">View All Subjects</a></li>
-                <!-- <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/updateAccount">Update User Info</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/updatePassword">Change Passwords</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/deleteAccount">Deactivate User</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/reactivateAccount">Restore User</a></li> -->
+                <li><a class="dropdown-item" href="/Admin">View All users</a></li>
+                <li><a class="dropdown-item" href="/Admin">Update User Info</a></li>
+                <li><a class="dropdown-item" href="/Admin">Change Passwords</a></li>
+                <li><a class="dropdown-item" href="/">Deactivate User</a></li>
+                <li><a class="dropdown-item" href="/">Reactivate User</a></li>
               
               </ul>
             </li>
@@ -135,10 +117,8 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li class="nav-item mb-4 fs-5">
-              <button type="button" class="nav-link btn btn-lg" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                Logout 
-                 </button>
+            <li class="nav-item">
+              <p> asdas</p>
             </li>
           </ul>
         
@@ -148,14 +128,12 @@
     </div>
   </nav>
   
+  
   <div class="app-container">
     <nav class="navbar navbar-expand navbar-dark bg-dark hover">
-      <div class="container">
-        <div class="navbar-nav me-auto">
-     
-        </div>
+      <div class="container">   
         <div class="navbar-nav ms-auto">
-          <button class="nav-item nav-link text-white">LHAHAHAHA</button>
+          <button class="nav-item nav-link text-white">EYY guba design ug kuhaon</button> yawa jud ni frontend
         </div>
       </div>
     </nav>
@@ -167,45 +145,32 @@
     </div>
   </div>
   
-  <!-- Button trigger modal -->
-  
-  
-  <!-- Modal logout-->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-      <div class="modal-content ">
-        
-        <div class="modal-body">
-          <strong>Are you sure you want to log out?</strong>
-      </div>
-        <div class="modal-footer">
-        
-    <div class="w-100">
-          <button type="button" class="btn  btn-danger float-left " on:click={logout}>Yes</button>
-      
-          <button type="button" class="btn  btn-secondary float-left ms-2" data-bs-dismiss="modal">No </button>
-      </div>
-    </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- {#if showLogoutConfirm}
-  {/if} -->
-  
-  <!-- <div class="popup" in:fade>
-    <div class="modal-content center">
-    <div class="modal-footer">
+  {#if showLogoutConfirm}
+  <div class="popup" in:fade>
+   
       <p>Are you sure you want to log out?</p>
       <button class="btn btn-outline-danger" on:click={confirmLogout}>Yes</button>
       <button class="btn btn-outline-secondary" on:click={cancelLogout}>No</button>
-      <button class="btn btn-outline-success opacity-75" on:click={cancelLogout}>Maybe</button>
-    </div>
+    
+   
   </div>
-  </div> -->
-  
+  {/if}
   
   <style>
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+  
   
     .custom-offcanvas-size {
       width: 15%; /* Adjust this percentage to control the size of the offcanvas */

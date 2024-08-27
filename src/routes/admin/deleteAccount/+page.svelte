@@ -117,7 +117,7 @@
                 passwordError = `Failed to delete account: Cant delete own account or admin account`;
                 setTimeout(() => {
                     window.location.reload();
-                }, 1500);
+                }, 2000);
             }
         } catch (error) {
             passwordError = `Error deleting account: ${error.message}`;
@@ -139,7 +139,7 @@
                 }
                 passwordSuccessMessage = '';
                 passwordError = '';
-            }, 1000);
+            }, 3000);
         }
     }
   }
@@ -151,7 +151,7 @@
   }
 </script>
 
-<h1>Accounts</h1>
+<h1 class="test-center">Delete Accounts</h1>
 
 {#if !error}
 <table class="table table-bordered">

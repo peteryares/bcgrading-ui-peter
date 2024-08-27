@@ -125,7 +125,7 @@
 </script>
 
 
-<h1>Accounts</h1>
+<h1 class="text-center">Change Passwoords</h1>
 {#if !error}
   <table class="table table-bordered">
     <thead>

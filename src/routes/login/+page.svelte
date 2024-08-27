@@ -8,6 +8,22 @@
     let username = '';
     let password = '';
     let error = '';
+    
+
+  
+    onMount(async () => {
+ 
+  if (!localStorage.getItem('x')) {
+    localStorage.setItem('x', 'true');
+    // Reload the page
+    window.location.reload();
+  } else {
+    localStorage.removeItem('x');
+  }
+});
+
+
+
 
     async function handleLogin() {
         try {

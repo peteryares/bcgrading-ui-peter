@@ -104,6 +104,7 @@
   <table class="table table-bordered">
     <thead>
       <tr>
+        <th></th>
         <th>ID</th>
         <th>First Name</th>
         <th>Last Name</th>
@@ -112,14 +113,18 @@
         <th>Created</th>
         <th>Updated</th>
         <th>Status</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       {#if selectedTab === 'all'}
         {#each accounts as accountinfo}
           <tr>
+            <td></td>
             <td>{accountinfo.id}</td>
             <td>{accountinfo.firstName}</td>
             <td>{accountinfo.lastName}</td>
@@ -134,8 +139,8 @@
                   <p class="badge-lg text-center text-bg-danger">Inactive</p>
                 {/if}
               </td>
-            <td><button class="btn btn-primary">Edit</button></td>
-            <td><button class="btn btn-danger">Delete</button></td>
+            <!-- <td><button class="btn btn-primary">Edit</button></td>
+            <td><button class="btn btn-danger">Delete</button></td> -->
           </tr>
         {/each}
       {/if}
@@ -143,6 +148,7 @@
       {#if selectedTab === 'active'}
         {#each activeAccounts as accountinfo}
           <tr>
+            <td></td>
             <td>{accountinfo.id}</td>
             <td>{accountinfo.firstName}</td>
             <td>{accountinfo.lastName}</td>
@@ -157,8 +163,8 @@
                   <p class="badge-lg text-center text-bg-danger">Inactive</p>
                 {/if}
               </td>
-            <td><button class="btn btn-primary">Edit</button></td>
-            <td><button class="btn btn-danger">Delete</button></td>
+            <!-- <td><button class="btn btn-primary">Edit</button></td>
+            <td><button class="btn btn-danger">Delete</button></td> -->
           </tr>
         {/each}
       {/if}
@@ -166,6 +172,7 @@
       {#if selectedTab === 'deleted'}
         {#each deletedAccounts as accountinfo}
           <tr>
+            <td></td>
             <td>{accountinfo.id}</td>
             <td>{accountinfo.firstName}</td>
             <td>{accountinfo.lastName}</td>
@@ -180,8 +187,8 @@
                   <p class="badge-lg text-center text-bg-danger">Inactive</p>
                 {/if}
               </td>
-            <td><button class="btn btn-primary">Edit</button></td>
-            <td><button class="btn btn-danger">Delete</button></td>
+            <!-- <td><button class="btn btn-primary">Edit</button></td>
+            <td><button class="btn btn-danger">Delete</button></td> -->
           </tr>
         {/each}
       {/if}

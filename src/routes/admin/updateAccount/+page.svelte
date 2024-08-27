@@ -108,7 +108,7 @@
 </script>
 
 
-<h1>Accounts</h1>
+<h1 class="text-center">Update Accounts</h1>
 {#if !error}
   <table class="table table-bordered">
     <thead>
