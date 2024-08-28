@@ -85,7 +85,7 @@
 </div> -->
 
 
-<div class="parent-container">
+<!-- <div class="parent-container">
 <div class="form__container">
     <form on:submit|preventDefault={handleLogin}>
       <div class="header__form">
@@ -122,7 +122,67 @@
     </form>
   </div>
 
-</div>
+</div> -->
+
+<section class="vh-100">
+  <div class="container-fluid p-0">
+    <div class="row">
+    
+      <div class="col-sm-5 text-black">
+
+        <div class="px-5 ms-xl-4 mt-5">
+          <img src="/src/lib/images/bc-logo.png" alt="" class="logo">
+        </div>
+
+        <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+
+          <form style="width: 23rem;" on:submit|preventDefault={handleLogin}>
+
+        
+              <!-- <input type="text" id="username" bind:value={username} required />
+              <label for="username" class="label">Username</label>
+              <div class="underline"></div> -->
+
+              <div class="form-floating mb-3">
+                <input type="text" id="username" bind:value={username} required class="form-control" placeholder="Username" />
+                <label class="form-label" for="username">Username</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input type="password" id="password" bind:value={password} required class="form-control" placeholder="password" />
+                <label class="form-label" for="password">Password</label>
+              </div>
+       
+        
+          
+            <div class="input-container">
+                {#if error}
+              <p style="color: red">{error}</p>
+                {/if}
+            </div>
+        
+              
+            <div class="pt-1 mb-4 d-flex justify-content-between align-items-center">
+              <button class="btn btn-primary" type="submit">Login</button>
+              <!-- <a href="/">Forgot password?</a> -->
+            </div>
+    
+          </form>
+
+        </div>
+
+      </div>
+      <div class="col-sm-7 px-0 d-none d-sm-block ">
+        <!-- svelte-ignore a11y-img-redundant-alt -->
+        <!-- <img src="/src/lib/images/male-team-illustration.png"
+          alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: center;"> -->
+
+          <img src="https://mis.benedictocollege.edu.ph/assets/bene-school-815be6299a10bcc76c09c819b5a1f49beb216565f77ba611270de3b63f1b33f6.jpg"
+          alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: center">
+      </div>
+    </div>
+  </div>
+</section>
 
 
 
@@ -138,124 +198,21 @@
 }
 
 
-
-
-
-.parent-container {
-  display: flex;
-  justify-content: center;  /* Center horizontally */
-  align-items: center;      /* Center vertically */
-  height: 100vh;            /* Full viewport height */
+.logo{
+  width: 120px;
+  height: 120px;
 }
 
-.form__container {
-  width: 500px;
-  padding: 3rem 0;
-  background-color: white;
-  border-radius: 10px;
-  margin: 0 auto;
-  
-  border: 1px solid rgb(8, 8, 8);
- 
+section{
+  background-color: rgba(255, 255, 255, 0.35);
 }
 
-.header__form {
-  display: flex;
-  align-items: center;
-  margin-bottom: 4rem;
-  justify-content: center;
-  gap: 1rem;
+.form-control{
+  outline: none !important;
 }
 
-.header__form img {
-  width: 100px;
-  height: 100px;
-}
-
-/* INPUT */
-
-.input-container {
-  position: relative;
-  margin: 2.5rem auto;
-  width: 300px;
-}
-
-.input-container input,
-.input-container input {
-  font-size: 1rem;
-  width: 100%;
-  border: none;
-  border-bottom: 2px solid #ccc;
-  padding: 5px 0;
-  background-color: transparent;
-  outline: none;
-}
-
-.input-container .label {
-  position: absolute;
-  top: 0.5rem;
-  left: 0;
-  font-size: 0.925rem;
-  color: #050505;
-  transition: all 0.3s ease;
-  pointer-events: none;
-}
-
-.input-container input[type="text"]:focus ~ .label,
-.input-container input[type="text"]:valid ~ .label {
-  top: -20px;
-  font-size: 0.925rem;
-  color: #ccc;
-}
-
-.input-container input[type="password"]:focus ~ .label,
-.input-container input[type="password"]:valid ~ .label {
-  top: -20px;
-  font-size: 0.925rem;
-  color: #ccc;
-}
-
-.input-container .underline {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 2px;
-  width: 100%;
-  background-color: orangered;
-  transform: scaleX(0);
-  transition: all 0.3s ease;
-}
-
-.input-container input[type="text"]:focus ~ .underline,
-.input-container input[type="text"]:valid ~ .underline {
-  transform: scaleX(1);
-}
-
-.input-container input[type="password"]:focus ~ .underline,
-.input-container input[type="password"]:valid ~ .underline {
-  transform: scaleX(1);
-}
-
-
-
-.button {
-  text-align: center;
-  margin: 2rem 0;
-}
-
-.sign__in__button {
-  cursor: pointer;
-  border: none;
-  background-color: rgb(25, 25, 177);
-  width: 200px;
-  color: white;
-  border-radius: 10px;
-  padding: 0.8rem 0;
-}
-
-.sign__in__button:hover {
-  transition: 200ms;
-  background-color: orangered;
+label{
+  color: gray !important;
 }
 
 </style>
