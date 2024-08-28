@@ -77,7 +77,7 @@ function showConfirmLogout() {
 <h1>Teacher Dashboard</h1>
 <p>Welcome, Teacher!</p>
 
-<button on:click={showConfirmLogout}>Logout</button>
+<button on:click={showConfirmLogout} >Logout</button>
 
 {#if showLogoutConfirm}
 <div class="popup" in:fade>
