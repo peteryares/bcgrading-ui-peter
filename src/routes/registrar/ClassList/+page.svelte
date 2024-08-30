@@ -248,6 +248,7 @@
                 <tr>
                     <th>Class ID</th>
                     <th>Subject Code</th>
+                    <th>Subject Title</th>
                     <th>Year</th>
                     <th>Semester</th>
                     <th>Teacher ID</th>
@@ -261,6 +262,7 @@
                 <tr>
                     <td>{classlist.classid}</td>
                     <td>{classlist.subjectcode}</td>
+                    <td>{classlist.title}</td>
                     <td>{classlist.year}</td>
                     <td>{classlist.semester}</td>
                     <td>{classlist.teacherid}</td>
@@ -287,6 +289,7 @@
                     <tr>
                         <th>Class ID</th>
                         <th>Subject Code</th>
+                        <th>Subject Title</th>
                         <th>Year</th>
                         <th>Semester</th>
                         <th>Teacher ID</th>
@@ -300,6 +303,7 @@
                     <tr>
                         <td>{classlist.classid}</td>
                         <td>{classlist.subjectcode}</td>
+                        <td>{classlist.title}</td>
                         <td>{classlist.year}</td>
                         <td>{classlist.semester}</td>
                         <td>{classlist.teacherid}</td>
