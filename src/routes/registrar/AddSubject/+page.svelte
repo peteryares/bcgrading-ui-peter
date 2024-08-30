@@ -41,7 +41,7 @@
 
             const result = await response.json();
             message = 'Subject created/added successfully!';
-            goto('/Registar/AddSubject'); // Redirect to a success page or dashboard
+            goto('/Registrar/AddSubject'); // Redirect to a success page or dashboard
         } catch (error) {
             message = error.message || 'Error creating account';
         }
