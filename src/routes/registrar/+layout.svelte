@@ -80,59 +80,93 @@
     
   </script>
   
-  <nav class="navbar navbar-dark bg-dark fixed-top custom-navbar-size">
+  <nav class="navbar fixed-top custom-navbar-size">
     <div class="container-fluid">
       <!-- Move the toggler button to the left -->
-      <div class="d-flex align-items-center">
-        <button class="navbar-toggler me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar">
-          <span class="navbar-toggler-icon"></span>
+      <div class="d-flex align-items-center gap-2">
+        <div>
+          <a href="/Admin"><img src="https://cebu.mis.benedictocollege.edu.ph/assets/logo-21a9a44cc070aa7b0436551dba367c97e53bce3864cb2151d4ed24682b8ae540.png" alt="" class="logo"></a>
+        </div>
+  
+        <button class="navbar-toggler bg-transparent navbar-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar">
+          <img src="https://assets.website-files.com/62e8f5c9dbfdccaf94d287ac/62ea9a21af559238cc12a830_menu_FILL0_wght400_GRAD0_opsz48%20(2).svg" alt="" class="navbar-toggler-icon navbar-span">
         </button>
+  
+        
       </div>
-      <p class="navbar-brand"> profile</p>
+      <div>
+        <img src="/src/lib/images/profile-circle.svg" alt="" class="profile">
+      </div>
       
       <!-- Offcanvas Menu -->
-      <div bind:this={offcanvasElement} class="offcanvas offcanvas-start text-bg-dark custom-offcanvas-size" tabindex="-1" id="offcanvasDarkNavbar">
+      <!-- <div bind:this={offcanvasElement} class="offcanvas offcanvas-start text-white custom-offcanvas-size navbar" tabindex="-1" id="offcanvasDarkNavbar">
         <div class="offcanvas-header">
-          <h5 class="navbar-brand">ADMIN PAGE</h5>
+          <img src="/src/lib/images/profile-circle.svg" alt="" class="profile">
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-            <li class="nav-item">
-              <a class="nav-link active" href="/Registrar">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/Registrar/ClassList/">List of Classes </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/Registrar/AddSubject/">Add Subjects</a>
-            </li>
-            <!-- <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Manage User Accounts
-              </a>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/Accounts">View All users</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/updateAccount">Update User Info</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/updatePassword">Change Passwords</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/deleteAccount">Deactivate User</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/reactivateAccount">Restore User</a></li>
-              
-              </ul>
-            </li> -->
-  
-  
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li class="nav-item mb-4 fs-5">
-              <button type="button" class="nav-link btn btn-lg" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                Logout 
-                 </button>
-            </li>
-          </ul>
+          <nav>
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <li class="nav-item">
+                <a class="nav-link active" href="/Registrar">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/Registrar/ClassList/">List of Classes </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/Registrar/AddSubject/">Add Subjects</a>
+              </li>
+           
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+            
+            </ul>
+          </nav>
+        
+          <button type="button" class="nav-link btn btn-md btn-danger p-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Logout 
+             </button>
+        </div>
+      </div> -->
+
+      <div bind:this={offcanvasElement} class="offcanvas offcanvas-start text-white custom-offcanvas-size " tabindex="-1" id="offcanvasDarkNavbar">
+        <div class="offcanvas-header">
+          <div class="d-flex align-items-center justify-content-between gap-2">
+            <img src="/src/lib/images/profile-circle.svg" alt="" class="profile">
+         
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close">
+           
+          </button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column justify-content-between">
+          <nav>
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 ">
+            
+              <li class="nav-item">
+                <a class="nav-link" href="/Registrar">
+                  <img src="/src/lib/images/home.svg" alt="">
+                  Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/Registrar/ClassList/">
+                  <img src="/src/lib/images/th-large.svg" alt="" class="ml-3 box">
+                  List of Classes </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/Registrar/AddSubject/">
+                  <img src="/src/lib/images/customer-lists-fill.svg" alt="">
+                  Add Subjects</a>
+              </li>
+           
+            </ul>
+          </nav>
         
           
+          <button type="button" class="btn btn-sm btn-danger p-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Logout 
+             </button>
         </div>
       </div>
     </div>
@@ -162,18 +196,20 @@
   
   <!-- Modal logout-->
   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-dialog modal-dialog-centered modal-md">
       <div class="modal-content ">
         
         <div class="modal-body">
-          <strong>Are you sure you want to log out?</strong>
+          <p class="text-center fw-bold fs-5">You are logging out of Benedicto College Grading System.</p>
+          <p class="text-center mt-2 text-body-secondary">Are you sure you want to log out?</p>
       </div>
         <div class="modal-footer">
         
     <div class="w-100">
-          <button type="button" class="btn  btn-danger float-left " on:click={logout}>Yes</button>
-      
-          <button type="button" class="btn  btn-secondary float-left ms-2" data-bs-dismiss="modal">No </button>
+          <div class="d-flex justify-content-center align-items-center gap-2">
+            <button type="button" class="btn  btn-danger  w-100" on:click={logout}>Yes</button>
+            <button type="button" class="btn  btn-secondary w-100" data-bs-dismiss="modal">No </button>
+          </div>
       </div>
     </div>
       </div>
@@ -200,11 +236,69 @@
     .custom-offcanvas-size {
       width: 15%; /* Adjust this percentage to control the size of the offcanvas */
       max-width: 15%; /* Ensures the offcanvas doesn't exceed this width */
+      background-color: #001A56;
     }
   
     .custom-navbar-size {
       height: 10%; /* Adjust this percentage to control the size of the offcanvas */
       max-height: 10%;
     }
+
+    .dropdown-menu{
+    border: none !important;
+  }
+
+  .navbar{
+    background-color: #001A56;
+  }
+
+  .dropdown-item:hover{
+    background-color: transparent !important;
+    color: #FF6100 !important;
+  }
+
+  .logo{
+  
+    width: 100%;
+    height: 30px;
+  
+  }
+
+  .navbar-button{
+    outline: none;
+    border: none;
+  }
+
+  .profile{
+    width: 40px;
+    height: 40px;
+    filter: invert(1);
+  }
+
+  li > a > img{
+    filter: invert(1);
+  }
+
+  li > a{
+    color: white;
+    display: flex;
+    gap: 1rem;
+    
+  }
+
+  a::after{
+    display: none;
+
+  }
+
+  a:hover{
+    color: #FF6100 !important;
+  }
+
+  .box{
+    height: 18px;
+    margin-left: 3px;
+    width: 18px;
+  }
   </style>
   

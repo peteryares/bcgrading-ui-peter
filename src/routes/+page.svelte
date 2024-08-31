@@ -43,7 +43,11 @@
     margin: 0;
     overflow: hidden !important;
     width: 100%;
+    
   }
+
+
+
 
    .right-image{
     width: 100%;

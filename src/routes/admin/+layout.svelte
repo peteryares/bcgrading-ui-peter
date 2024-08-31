@@ -103,7 +103,7 @@
       <div class="offcanvas-header">
         <div class="d-flex align-items-center justify-content-between gap-2">
           <img src="/src/lib/images/profile-circle.svg" alt="" class="profile">
-          <h5 class="navbar-brand text-white">Admin</h5>
+       
         </div>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close">
          
@@ -111,7 +111,7 @@
       </div>
       <div class="offcanvas-body d-flex flex-column justify-content-between">
         <nav>
-          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 ">
             <li class="nav-item d-flex alig-items-center gap-4">
               <a class="nav-link active text-white" href="/Admin">
                 <img src="/src/lib/images/home.svg" alt="">
@@ -157,7 +157,7 @@
         </nav>
       
         
-        <button type="button" class="nav-link btn btn-lg" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        <button type="button" class="btn btn-sm btn-danger p-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
           Logout 
            </button>
       </div>
@@ -189,18 +189,20 @@
 
 <!-- Modal logout-->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-sm">
+  <div class="modal-dialog modal-dialog-centered modal-md">
     <div class="modal-content ">
       
       <div class="modal-body">
-        <strong>Are you sure you want to log out?</strong>
+        <p class="text-center fw-bold fs-5">You are logging out of Benedicto College Grading System.</p>
+        <p class="text-center mt-2 text-body-secondary">Are you sure you want to log out?</p>
     </div>
       <div class="modal-footer">
       
   <div class="w-100">
-        <button type="button" class="btn  btn-danger float-left " on:click={logout}>Yes</button>
-    
-        <button type="button" class="btn  btn-secondary float-left ms-2" data-bs-dismiss="modal">No </button>
+        <div class="d-flex justify-content-center align-items-center gap-2">
+          <button type="button" class="btn  btn-danger  w-100" on:click={logout}>Yes</button>
+          <button type="button" class="btn  btn-secondary w-100" data-bs-dismiss="modal">No </button>
+        </div>
     </div>
   </div>
     </div>
