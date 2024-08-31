@@ -151,13 +151,13 @@
   }
 </script>
 
-<h1 class="test-center">Delete Accounts</h1>
+<h1 class="text-center">Delete Accounts</h1>
 
 {#if !error}
-<table class="table table-bordered">
+<table class="table table-bordered mt-5">
   <thead>
     <tr>
-      <th>ID</th>
+      <!-- <th>ID</th> -->
       <th>First Name</th>
       <th>Last Name</th>
       <th>Username</th>
@@ -171,7 +171,7 @@
   <tbody>
     {#each accounts as accountinfo}
       <tr>
-        <td>{accountinfo.id}</td>
+        <!-- <td>{accountinfo.id}</td> -->
         <td>{accountinfo.firstName}</td>
         <td>{accountinfo.lastName}</td>
         <td>{accountinfo.username}</td>
@@ -180,9 +180,9 @@
         <td>{accountinfo.updated}</td>
         <td>
           {#if accountinfo.isActive}
-            <p class="badge-lg text-center text-bg-success">Active</p>
+            <p class="badge-lg text-center text-bg-success p-2 rounded">Active</p>
           {:else}
-            <p class="badge-lg text-center text-bg-danger">Inactive</p>
+            <p class="badge-lg text-center text-bg-danger p-2 rounded">Inactive</p>
           {/if}
         </td>
         <td>
@@ -216,7 +216,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" on:click={closeDeleteModal}></button>
       </div>
       <div class="modal-body">
-        Are you sure you want to delete the account with ID <strong>{accountToDelete}</strong> and username <strong>{accountToDeleteUsername}</strong>?
+        Are you sure you want to delete the account username <strong>{accountToDeleteUsername}</strong>?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" on:click={closeDeleteModal}>Cancel</button>
