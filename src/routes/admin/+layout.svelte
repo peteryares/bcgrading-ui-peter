@@ -80,7 +80,7 @@
   
 </script>
 
-<nav class="navbar navbar-dark bg-dark fixed-top custom-navbar-size">
+<nav class="navbar navbar-dark bg-dark  fixed-top custom-navbar-size">
   <div class="container-fluid">
     <!-- Move the toggler button to the left -->
     <div class="d-flex align-items-center">
