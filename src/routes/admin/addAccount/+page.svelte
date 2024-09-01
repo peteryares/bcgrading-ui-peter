@@ -55,11 +55,12 @@
    
 </script>
 
-<h4 class="text-center">Add Account</h4>
 
 <div class="row justify-content-center align-items-center h-100">
-    <div class="col-4">
-        <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+    
+<h4 class="text-center">Add Account</h4>
+    <div class="col-6">
+        <div class="card shadow-2-strong card-registration" style="border: none;">
             <div class="card-body p-4 p-md-5">
                 <!-- <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Add Account Details Form</h3> -->
 
@@ -88,7 +89,7 @@
         <div class="col-md-12 mb-4">
             <div data-mdb-input-init class="form-outline">
         <label class="form-label" for="username">Username:</label>
-        <input class="form-control form-control-md" placeholder="username" id="username" type="text"  bind:value={username} required />
+        <input class="form-control form-control-md" placeholder="Username" id="username" type="text"  bind:value={username} required />
     </div>
     </div>
     </div>
@@ -96,17 +97,17 @@
 
 
 <div class="row">
-    <div class="col-md-6 mb-4">
+    <div class="mb-4">
         <div data-mdb-input-init class="form-outline">
         <label class="form-label" for="password">Password:</label>
-        <input class="form-control form-control-md" placeholder="password" id="password" type="password" bind:value={password} required />
+        <input class="form-control form-control-md" placeholder="Password" id="password" type="password" bind:value={password} required />
     </div></div>
 
 
-<div class="col-md-6 mb-4">
+<div class="mb-4">
     <div data-mdb-input-init class="form-outline">
     <label class="form-label" for="confirmPassword">Confirm Password:</label>
-    <input class="form-control form-control-md" placeholder="ConfirmPassword" id="confirmPassword" type="password" bind:value={confirmPassword} required />
+    <input class="form-control form-control-md" placeholder="Confirm Password" id="confirmPassword" type="password" bind:value={confirmPassword} required />
     </div></div>
 
  
@@ -127,7 +128,7 @@
 
 
     <div class="mt-4 pt-2">
-        <button data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit">Create Account</button>
+        <button data-mdb-ripple-init class="btn btn-primary btn-md" type="submit">Create Account</button>
       </div>
    
 </form>

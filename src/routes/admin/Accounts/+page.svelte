@@ -104,8 +104,8 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th></th>
-        <th>ID</th>
+        <!-- <th></th>
+        <th>ID</th> -->
         <th>First Name</th>
         <th>Last Name</th>
         <th>Username</th>
@@ -113,19 +113,19 @@
         <th>Created</th>
         <th>Updated</th>
         <th>Status</th>
+        <!-- <th></th>
         <th></th>
         <th></th>
         <th></th>
-        <th></th>
-        <th></th>
+        <th></th> -->
       </tr>
     </thead>
     <tbody>
       {#if selectedTab === 'all'}
         {#each accounts as accountinfo}
           <tr>
-            <td></td>
-            <td>{accountinfo.id}</td>
+            <!-- <td></td>
+            <td>{accountinfo.id}</td> -->
             <td>{accountinfo.firstName}</td>
             <td>{accountinfo.lastName}</td>
             <td>{accountinfo.username}</td>
@@ -134,9 +134,9 @@
             <td>{accountinfo.updated}</td>
             <td>
                 {#if accountinfo.isActive}
-                  <p class="badge-lg text-center text-bg-success">Active</p>
+                  <p class="badge-lg text-center text-bg-success p-2 rounded">Active</p>
                 {:else}
-                  <p class="badge-lg text-center text-bg-danger">Inactive</p>
+                  <p class="badge-lg text-center text-bg-danger p-2 rounded">Inactive</p>
                 {/if}
               </td>
             <!-- <td><button class="btn btn-primary">Edit</button></td>
@@ -148,8 +148,8 @@
       {#if selectedTab === 'active'}
         {#each activeAccounts as accountinfo}
           <tr>
-            <td></td>
-            <td>{accountinfo.id}</td>
+            <!-- <td></td> -->
+            <!-- <td>{accountinfo.id}</td> -->
             <td>{accountinfo.firstName}</td>
             <td>{accountinfo.lastName}</td>
             <td>{accountinfo.username}</td>
@@ -158,9 +158,9 @@
             <td>{accountinfo.updated}</td>
             <td>
                 {#if accountinfo.isActive}
-                  <p class="badge-lg text-center text-bg-success">Active</p>
+                  <p class="badge-lg text-center text-bg-success p-2 rounded">Active</p>
                 {:else}
-                  <p class="badge-lg text-center text-bg-danger">Inactive</p>
+                  <p class="badge-lg text-center text-bg-danger p-2 rounded">Inactive</p>
                 {/if}
               </td>
             <!-- <td><button class="btn btn-primary">Edit</button></td>
@@ -172,8 +172,8 @@
       {#if selectedTab === 'deleted'}
         {#each deletedAccounts as accountinfo}
           <tr>
-            <td></td>
-            <td>{accountinfo.id}</td>
+            <!-- <td></td>
+            <td>{accountinfo.id}</td> -->
             <td>{accountinfo.firstName}</td>
             <td>{accountinfo.lastName}</td>
             <td>{accountinfo.username}</td>
@@ -182,9 +182,9 @@
             <td>{accountinfo.updated}</td>
             <td>
                 {#if accountinfo.isActive}
-                  <p class="badge-lg text-center text-bg-success">Active</p>
+                  <p class="badge-lg text-center text-bg-success p-2 rounded">Active</p>
                 {:else}
-                  <p class="badge-lg text-center text-bg-danger">Inactive</p>
+                  <p class="badge-lg text-center text-bg-danger p-2 rounded">Inactive</p>
                 {/if}
               </td>
             <!-- <td><button class="btn btn-primary">Edit</button></td>

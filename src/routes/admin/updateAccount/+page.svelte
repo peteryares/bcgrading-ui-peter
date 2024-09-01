@@ -110,10 +110,10 @@
 
 <h1 class="text-center">Update Accounts</h1>
 {#if !error}
-  <table class="table table-bordered">
+  <table class="table table-bordered mt-5">
     <thead>
       <tr>
-        <th>ID</th>
+        <!-- <th>ID</th> -->
         <th>First Name</th>
         <th>Last Name</th>
         <th>Username</th>
@@ -122,13 +122,12 @@
         <th>Updated</th>
         <th>Status</th>
         <th>Edit</th>
-        <th>Delete</th>
       </tr>
     </thead>
     <tbody>
       {#each accounts as accountinfo}
         <tr>
-          <td>{accountinfo.id}</td>
+          <!-- <td>{accountinfo.id}</td> -->
           <td>{accountinfo.firstName}</td>
           <td>{accountinfo.lastName}</td>
           <td>{accountinfo.username}</td>
@@ -137,9 +136,9 @@
           <td>{accountinfo.updated}</td>
           <td>
             {#if accountinfo.isActive}
-              <p class="badge-lg text-center text-bg-success">Active</p>
+              <p class="badge-lg text-center text-bg-success rounded p-2">Active</p>
             {:else}
-              <p class="badge-lg text-center text-bg-danger">Inactive</p>
+              <p class="badge-lg text-center text-bg-danger rounded p-2">Inactive</p>
             {/if}
           </td>
           <td>
@@ -151,11 +150,9 @@
             >
               Edit
             </button>
-          </td>
-          <td>
-            <!-- Add your delete button logic here -->
             <button class="btn btn-danger">Delete</button>
           </td>
+        
         </tr>
       {/each}
     </tbody>
@@ -183,20 +180,22 @@
       <form id="editAccountForm" on:submit={updateAccount}>
         <div class="modal-body">
           <input type="hidden" name="id" value="{$selectedAccount.id}">
-          <div class="mb-3">
-            <label for="firstName" class="form-label">First Name</label>
-            <input type="text" class="form-control" id="firstName" name="firstName" value="{$selectedAccount.firstName}" required>
+          <div class="row">
+            <div class="mb-3 col">
+              <label for="firstName" class="form-label">First Name:</label>
+              <input type="text" class="form-control" id="firstName" name="firstName" value="{$selectedAccount.firstName}" required>
+            </div>
+            <div class="mb-3 col">
+              <label for="lastName" class="form-label">Last Name:</label>
+              <input type="text" class="form-control" id="lastName" name="lastName" value="{$selectedAccount.lastName}" required>
+            </div>
           </div>
           <div class="mb-3">
-            <label for="lastName" class="form-label">Last Name</label>
-            <input type="text" class="form-control" id="lastName" name="lastName" value="{$selectedAccount.lastName}" required>
-          </div>
-          <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
+            <label for="username" class="form-label">Username:</label>
             <input type="text" class="form-control" id="username" name="username" value="{$selectedAccount.username}" required>
           </div>
           <div class="mb-3">
-            <label for="role" class="form-label">Role</label>
+            <label for="role" class="form-label">Role:</label>
             <select class="form-select" id="role" name="role">
               <option value="Admin" selected={$selectedAccount.role === 'Admin'}>Admin</option>
               <option value="Student" selected={$selectedAccount.role === 'Student'}>Student</option>
@@ -206,7 +205,7 @@
           </div>
         </div>
         <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" >Save changes</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" >Save</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
      
         </div>

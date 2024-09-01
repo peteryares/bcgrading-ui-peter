@@ -216,7 +216,7 @@
         <button type="button" style="width: 500px !important;" class="btn dropdown-toggle border-dark" data-bs-toggle="dropdown">
          SUBJECT: {selectedSubject}           
         </button>
-        <ul class="dropdown-menu" style="max-height: 200px; overflow-y: auto; width: 500px !important;">
+        <ul class="dropdown-menu" style="max-height: 200px; overflow-x: hidden; width: 500px !important;">
             {#each subjects as subject}
             <li class="bg-light border">
                 <button class="dropdown-item" on:click={() => handleSubjectSelect(subject.subjectcode)}>{subject.subjectcode} - {subject.title}</button>

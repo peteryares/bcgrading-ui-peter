@@ -154,7 +154,7 @@
   <h1 class="text-center"> Restore Accounts</h1>
   
   {#if !error}
-  <table class="table table-bordered">
+  <table class="table table-bordered mt-5">
     <thead>
       <tr>
         <th>ID</th>
