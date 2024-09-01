@@ -244,18 +244,18 @@
       max-height: 10%;
     }
 
-    .dropdown-menu{
-    border: none !important;
-  }
+  
 
   .navbar{
     background-color: #001A56;
   }
-
+  /* .dropdown-menu{
+    border: none !important;
+  }
   .dropdown-item:hover{
     background-color: transparent !important;
     color: #FF6100 !important;
-  }
+  } */
 
   .logo{
   
