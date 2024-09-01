@@ -58,13 +58,17 @@
 
 <div class="row justify-content-center align-items-center h-100">
     
-<h4 class="text-center">Add Account</h4>
+
     <div class="col-6">
         <div class="card shadow-2-strong card-registration" style="border: none;">
             <div class="card-body p-4 p-md-5">
                 <!-- <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Add Account Details Form</h3> -->
-
-
+                {#if message}
+                <div class="alert alert-danger" role="alert">
+                    {message}
+                </div>
+            {/if}
+            <h4 class="text-center">Add Account</h4>
 <form class="form-inline" on:submit|preventDefault={handleSubmit}>
 
     <div class="row">
@@ -157,10 +161,6 @@
 
 </div>
 
-
-{#if message}
-    <p>{message}</p>
-{/if}
 
 
 <style>
