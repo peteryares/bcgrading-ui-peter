@@ -8,6 +8,7 @@
     let semesters = [];
     let subjects = [];
     let error = '';
+    let successMessage = '';
     let showUnauthorizedMessage = false;
     let countdown = 5;
     let redirectMessage = '';
@@ -100,7 +101,14 @@
             });
 
             if (response.ok) {
-                alert('Class added successfully!');
+                successMessage = `Class added successfully!
+                [${selectedSubject}] [Year: ${selectedYear}] [Semester: ${selectedSemester}] [Teacher ID: ${teacherId}]`;
+
+                // Hide the success message after 5 seconds
+                setTimeout(() => {
+                    successMessage = '';
+                }, 5000);
+
                 // Optionally, you can reset the selection
                 selectedYear = '';
                 selectedSemester = '';
@@ -108,6 +116,9 @@
                 teacherId = '';
             } else {
                 error = `Failed to add class: ${response.statusText}`;
+                setTimeout(() => {
+                    error = '';
+                }, 4000);
             }
         } catch (err) {
             error = `Error adding class: ${err.message}`;
@@ -134,15 +145,23 @@
 
 <div class="container mt-4" style="height: 70vh;">
     <h2>Add Class</h2>
-    {#if error}
-        <div class="alert alert-danger">{error}</div>
+
+    {#if successMessage}
+        <div class="alert alert-success" role="alert">
+            {successMessage}
+        </div>
     {/if}
 
+    {#if error}
+        <div class="alert alert-danger" role="alert">
+            {error}
+        </div>
+    {/if}
 
     <div class="mb-3">
         <label for="subjectSelect" class="form-label">Select Subject</label>
         <div class="dropdown">
-            <select id="subjectSelect" class="form-select" bind:value={selectedSubject} size="1" style="max-height: 150px; overflow-y: auto;">
+            <select id="subjectSelect" class="form-select" bind:value={selectedSubject} required size="1" style="max-height: 150px; overflow-y: auto;">
                 <option value="">Choose...</option>
                 {#each subjects as subject}
                     <option value={subject.subjectcode}>{subject.subjectcode} - {subject.title}</option>
@@ -150,35 +169,32 @@
             </select>
         </div>
     </div>
-
+    
     <div class="mb-3">
         <label for="yearSelect" class="form-label">Select Year</label>
-        <select id="yearSelect" class="form-select" bind:value={selectedYear}>
+        <select id="yearSelect" class="form-select" bind:value={selectedYear} required>
             <option value="">Choose...</option>
             {#each years as year}
                 <option value={year.year}>{year.year}</option>
             {/each}
         </select>
     </div>
-
+    
     <div class="mb-3">
         <label for="semesterSelect" class="form-label">Select Semester</label>
-        <select id="semesterSelect" class="form-select" bind:value={selectedSemester}>
+        <select id="semesterSelect" class="form-select" bind:value={selectedSemester} required>
             <option value="">Choose...</option>
             {#each semesters as semester}
                 <option value={semester.semester}>{semester.semester}</option>
             {/each}
         </select>
     </div>
-
- 
     
-    
-
     <div class="mb-3">
         <label for="teacherId" class="form-label">Teacher ID</label>
-        <input type="text" id="teacherId" class="form-control" bind:value={teacherId} placeholder="Enter Teacher ID" />
+        <input type="text" id="teacherId" class="form-control" bind:value={teacherId} required placeholder="Enter Teacher ID" />
     </div>
+    
 
     <button class="btn btn-primary" on:click={addClass}>Add Class</button>
 </div>

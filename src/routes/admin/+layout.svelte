@@ -255,12 +255,12 @@
     color: #FF6100 !important;
   }
 
-  .logo{
+  /* .logo{
   
     width: 100%;
     height: 30px;
   
-  }
+  } */
 
   .navbar-button{
     outline: none;

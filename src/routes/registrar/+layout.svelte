@@ -155,6 +155,11 @@
                   List of Classes </a>
               </li>
               <li class="nav-item">
+                <a class="nav-link" href="/Registrar/AddClass/">
+                  <img src="/src/lib/images/customer-lists-fill.svg" alt="">
+                  Add Class</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="/Registrar/AddSubject/">
                   <img src="/src/lib/images/customer-lists-fill.svg" alt="">
                   Add Subjects</a>
@@ -164,11 +169,7 @@
                   <img src="/src/lib/images/customer-lists-fill.svg" alt="">
                   List of Subjects</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/Registrar/AddClass/">
-                  <img src="/src/lib/images/customer-lists-fill.svg" alt="">
-                  Add Class</a>
-              </li>
+             
            
            
             </ul>
