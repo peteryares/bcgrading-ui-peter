@@ -117,7 +117,7 @@
                 passwordError = `Failed to delete account: Cant delete own account or admin account`;
                 setTimeout(() => {
                     window.location.reload();
-                }, 2000);
+                }, 1500);
             }
         } catch (error) {
             passwordError = `Error deleting account: ${error.message}`;
@@ -219,8 +219,9 @@
         Are you sure you want to delete the account username <strong>{accountToDeleteUsername}</strong>?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" on:click={closeDeleteModal}>Cancel</button>
+   
         <button type="button" class="btn btn-danger" on:click={confirmDelete}>Delete</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" on:click={closeDeleteModal}>Cancel</button>
       </div>
     </div>
   </div>
