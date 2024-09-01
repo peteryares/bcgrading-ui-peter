@@ -84,9 +84,9 @@
   <div class="container-fluid">
     <!-- Move the toggler button to the left -->
     <div class="d-flex align-items-center gap-2">
-      <div>
+      <!-- <div>
         <a href="/Admin"><img src="https://cebu.mis.benedictocollege.edu.ph/assets/logo-21a9a44cc070aa7b0436551dba367c97e53bce3864cb2151d4ed24682b8ae540.png" alt="" class="logo"></a>
-      </div>
+      </div> -->
 
       <button class="navbar-toggler bg-transparent navbar-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar">
         <img src="https://assets.website-files.com/62e8f5c9dbfdccaf94d287ac/62ea9a21af559238cc12a830_menu_FILL0_wght400_GRAD0_opsz48%20(2).svg" alt="" class="navbar-toggler-icon navbar-span">
