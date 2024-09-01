@@ -124,25 +124,28 @@
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="/src/lib/images/customer-lists-fill.svg" alt="">
+              
                 Manage Users
+
+                  <img src="/src/lib/images/nav-arrow-down.svg" alt="">
               </a>
               <ul class="dropdown-menu bg-transparent">
-                <li><a bind:this={offcanvasElement} class="dropdown-item text-white " href="/Admin/Accounts">- View All users</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item text-white" href="/Admin/updateAccount">- Update User Info</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item text-white" href="/Admin/updatePassword">- Change Passwords</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item text-white" href="/Admin/deleteAccount">- Deactivate User</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item text-white" href="/Admin/reactivateAccount">- Restore User</a></li>
+                <li><a bind:this={offcanvasElement} class="dropdown-item text-white p-0 py-1 " href="/Admin/Accounts">- View All users</a></li>
+                <li><a bind:this={offcanvasElement} class="dropdown-item text-white p-0 py-1" href="/Admin/updateAccount">- Update User Info</a></li>
+                <li><a bind:this={offcanvasElement} class="dropdown-item text-white p-0 py-1" href="/Admin/updatePassword">- Change Passwords</a></li>
+                <li><a bind:this={offcanvasElement} class="dropdown-item text-white p-0 py-1" href="/Admin/deleteAccount">- Deactivate User</a></li>
+                <li><a bind:this={offcanvasElement} class="dropdown-item text-white p-0 py-1" href="/Admin/reactivateAccount">- Restore User</a></li>
           
               </ul>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="/src/lib/images/text-formatting-list-bullets.svg" alt="" class="box">
+                <!-- <img src="/src/lib/images/text-formatting-list-bullets.svg" alt="" class="box"> -->
                Subject Lists
+               <img src="/src/lib/images/nav-arrow-down.svg" alt="">
               </a>
               <ul class="dropdown-menu bg-transparent">
-                <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin">- View All Subjects</a></li>
+                <li><a bind:this={offcanvasElement} class="dropdown-item p-0 py-1" href="/Admin">- View All Subjects</a></li>
                 <!-- <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/updateAccount">Update User Info</a></li>
                 <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/updatePassword">Change Passwords</a></li>
                 <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/deleteAccount">Deactivate User</a></li>
