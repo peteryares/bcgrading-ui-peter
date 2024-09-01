@@ -16,7 +16,7 @@
       <div class="py-3 px-10">
         <div class="row">
           <div class="col-5 mt-5 left">
-            <h1 class="text-left">Welcome to <span class="benedicto">Benedicto</span> <span class="college">College</span> Grading System</h1>
+            <h1 class="text-left"> test Welcome to <span class="benedicto">Benedicto</span> <span class="college">College</span> Grading System</h1>
             <!-- <div class="text-center">
               <h1 class="w-100 benedicto-college">
                 Welcome to Benedicto College
