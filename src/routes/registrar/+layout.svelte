@@ -85,7 +85,7 @@
       <!-- Move the toggler button to the left -->
       <div class="d-flex align-items-center gap-2">
         <div>
-          <a href="/Admin"><img src="https://cebu.mis.benedictocollege.edu.ph/assets/logo-21a9a44cc070aa7b0436551dba367c97e53bce3864cb2151d4ed24682b8ae540.png" alt="" class="logo"></a>
+          <a href="/Registrar"><img src="https://cebu.mis.benedictocollege.edu.ph/assets/logo-21a9a44cc070aa7b0436551dba367c97e53bce3864cb2151d4ed24682b8ae540.png" alt="" class="logo"></a>
         </div>
   
         <button class="navbar-toggler bg-transparent navbar-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar">
@@ -159,6 +159,17 @@
                   <img src="/src/lib/images/customer-lists-fill.svg" alt="">
                   Add Subjects</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/Registrar/SubjectList/">
+                  <img src="/src/lib/images/customer-lists-fill.svg" alt="">
+                  List of Subjects</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/Registrar/AddClass/">
+                  <img src="/src/lib/images/customer-lists-fill.svg" alt="">
+                  Add Class</a>
+              </li>
+           
            
             </ul>
           </nav>
