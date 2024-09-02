@@ -25,7 +25,7 @@
                 Management System
               </p>
             </div> -->
-          <a href="/login" type="button" class="btn btn-primary mt-4">Login to your account</a>
+          <a href="/Login" type="button" class="btn btn-primary mt-4">Login to your account</a>
           </div>
           <div class="col-sm-7 px-0 d-none d-sm-block ">
             <img src="/src/lib/images/male-team-illustration.png" alt="" class="right-image">
