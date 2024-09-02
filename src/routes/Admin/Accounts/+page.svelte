@@ -1,19 +1,16 @@
 <script>
     import { onMount } from 'svelte';
-    import { fade } from 'svelte/transition';
 
     let accounts = [];
     let activeAccounts = [];
     let deletedAccounts = [];
     let error = null;
     let selectedTab = 'all'; // Default tab
-    let showUnauthorizedMessage = false;
-    let countdown = 5;
-    let redirectMessage = '';
 
     // Fetch accounts on component mount
     onMount(async () => {
-        try {
+
+   
             const token = localStorage.getItem('jwtToken'); // Replace with your actual JWT token
 
             // Fetch active accounts
@@ -47,38 +44,13 @@
             // Combine active and inactive accounts for the "All" tab
             accounts = [...activeAccounts, ...deletedAccounts];
 
-        } catch (err) {
-            handleUnauthorized(`Error fetching accounts: ${err.message}`);
-        }
+
+
     });
 
-    function handleUnauthorized(message) {
-        redirectMessage = message;
-        showUnauthorizedMessage = true;
-        
-        const interval = setInterval(() => {
-            countdown--;
-            if (countdown <= 0) {
-                clearInterval(interval);
-                
-                // Ensure this is only executed in the browser
-                if (typeof window !== 'undefined') {
-                    window.location.href = '/login'; // Redirect to login page
-                }
-            }
-        }, 1000);
-    }
+  
 </script>
 
-<!-- Unauthorized message popup -->
-{#if showUnauthorizedMessage}
-<div class="popup" in:fade>
-    <div class="popup-content">
-        <p>{redirectMessage}</p>
-        <p>Redirecting you in {countdown} seconds...</p>
-    </div>
-</div>
-{/if}
 
 <!-- Bootstrap tabs -->
 <ul class="nav nav-tabs">
@@ -199,24 +171,5 @@
 {/if}
 
 <style>
-    .popup {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
-
-    .popup-content {
-        padding: 20px;
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-        text-align: center;
-    }
+ 
 </style>

@@ -45,7 +45,7 @@
 
             const result = await response.json();
             message = 'Account created successfully!';
-            goto('/Admin/addAccount'); // Redirect to a success page or dashboard
+            goto('/Admin/AddAccount'); // Redirect to a success page or dashboard
         } catch (error) {
             message = error.message || 'Error creating account';
         }

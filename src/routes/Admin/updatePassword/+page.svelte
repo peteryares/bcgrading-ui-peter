@@ -23,21 +23,11 @@
         bootstrap = bootstrapModule.default;
 
         const token = localStorage.getItem('jwtToken');
-        if (!token) {
-            unauthorizedAccess("No token found, redirecting to login.");
-            return;
-        }
-
-        try {
+      
             const decodedToken = jwtDecode(token);
             userRole = decodedToken.role;
 
-            if (userRole !== 'Admin') {
-                redirectMessage = `Role '${userRole}' does not have access to this page.`;
-                unauthorizedAccess("Redirecting you to your role-specific page.");
-                return;
-            }
-
+       
             const userlist = await fetch('http://localhost:4000/admin', {
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -49,27 +39,8 @@
             } else {
                 error = `Failed to fetch accounts: ${userlist.statusText}`;
             }
-        } catch (error) {
-            unauthorizedAccess("Error decoding token, redirecting to login.");
-        }
+      
     });
-
-    function unauthorizedAccess(message) {
-        console.error(message);
-        showUnauthorizedMessage = true;
-        redirectMessage = message;
-        const interval = setInterval(() => {
-            countdown--;
-            if (countdown <= 0) {
-                clearInterval(interval);
-                if (redirectMessage.includes("login")) {
-                    goto('/login');
-                } else {
-                    goto(`/${userRole}`);
-                }
-            }
-        }, 1000);
-    }
 
     async function changePassword(event) {
         event.preventDefault();
@@ -117,9 +88,6 @@
             passwordError = `Error changing password: ${error.message}`;
         }
     }
-
-
-   
 
 
 </script>
@@ -177,14 +145,6 @@
   </table>
 {/if}
 
-{#if showUnauthorizedMessage}
-<div class="popup" in:fade>
-    <div class="popup-content">
-        <p>{redirectMessage}</p>
-        <p>Redirecting you in {countdown} seconds...</p>
-    </div>
-</div>
-{/if}
 
 <!-- Bootstrap Modal for Changing Password -->
 <!-- Modal HTML -->
@@ -222,36 +182,10 @@
     </div>
 </div>
 
-<!-- Success message after update -->
-
-<!-- Error message if any -->
 {#if error}
     <p>{error}</p>
 {/if}
 
 <style>
-    .popup {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.9);
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
-
-    .popup-content {
-        padding: 20px;
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-        text-align: center;
-    }
-
-    .alert {
-        margin-top: 10px;
-    }
+  
 </style>

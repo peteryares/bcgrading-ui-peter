@@ -1,15 +1,10 @@
 <script>
   import 'bootstrap/dist/css/bootstrap.min.css';
   import { onMount } from 'svelte';
-  import { goto } from '$app/navigation';
-  import { fade } from 'svelte/transition';
   import { jwtDecode } from 'jwt-decode';
 
   let accounts = [];
   let error = '';
-  let showUnauthorizedMessage = false;
-  let countdown = 5;
-  let redirectMessage = '';
   let userRole = '';
   let showDeleteModal = false;
   let accountToDelete = null;
@@ -26,12 +21,8 @@
 
     const token = localStorage.getItem('jwtToken');
 
-    if (!token) {
-        unauthorizedAccess("No token found, redirecting to login.");
-        return;
-    }
+ 
 
-    try {
         const decodedToken = jwtDecode(token);
         userRole = decodedToken.role;
 
@@ -53,27 +44,10 @@
             error = `Failed to fetch accounts: ${userlist.statusText}`;
         }
 
-    } catch (error) {
-        unauthorizedAccess("Error decoding token, redirecting to login.");
-    }
+
+        
   });
 
-  function unauthorizedAccess(message) {
-    console.error(message);
-    showUnauthorizedMessage = true;
-    redirectMessage = message;
-    const interval = setInterval(() => {
-        countdown--;
-        if (countdown <= 0) {
-            clearInterval(interval);
-            if (redirectMessage.includes("login")) {
-                goto('/login');
-            } else {
-                goto(`/${userRole}`);
-            }
-        }
-    }, 1000);
-  }
 
   async function openDeleteModal(accountId) {
     accountToDelete = accountId;
@@ -198,14 +172,6 @@
   <p>{error}</p>
 {/if}
 
-{#if showUnauthorizedMessage}
-<div class="popup" in:fade>
-  <div class="popup-content">
-      <p>{redirectMessage}</p>
-      <p>Redirecting you in {countdown} seconds...</p>
-  </div>
-</div>
-{/if}
 
 <!-- Delete Confirmation Modal -->
 <div class={`modal fade ${showDeleteModal ? 'show' : ''}`} id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden={!showDeleteModal} style={showDeleteModal ? 'display: block;' : 'display: none;'}>
@@ -241,20 +207,8 @@
 {/if}
 
 <style>
-  .popup {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(0, 0, 0, 0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-  }
-  .popup-content {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 5px;
-  }
+
+
+
+
 </style>

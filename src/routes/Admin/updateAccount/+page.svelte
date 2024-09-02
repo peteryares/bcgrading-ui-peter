@@ -2,15 +2,10 @@
     import { writable } from 'svelte/store';
     import 'bootstrap/dist/css/bootstrap.min.css';
     import { onMount } from 'svelte';
-    import { goto } from '$app/navigation';
-    import { fade } from 'svelte/transition';
     import { jwtDecode } from 'jwt-decode';
 
     let accounts = [];
     let error = '';
-    let showUnauthorizedMessage = false;
-    let countdown = 5;
-    let redirectMessage = '';
     let userRole = '';
     const selectedAccount = writable(null);
     let successMessage = ''; // New state for success message
@@ -19,20 +14,12 @@
         await import('bootstrap/dist/js/bootstrap.bundle.min.js');
 
         const token = localStorage.getItem('jwtToken');
-        if (!token) {
-            unauthorizedAccess("No token found, redirecting to login.");
-            return;
-        }
-
-        try {
+  
+     
             const decodedToken = jwtDecode(token);
             userRole = decodedToken.role;
 
-            if (userRole !== 'Admin') {
-                redirectMessage = `Role '${userRole}' does not have access to this page.`;
-                unauthorizedAccess("Redirecting you to your role-specific page.");
-                return;
-            }
+          
 
             const userlist = await fetch('http://localhost:4000/admin', {
                 headers: {
@@ -45,27 +32,9 @@
             } else {
                 error = `Failed to fetch accounts: ${userlist.statusText}`;
             }
-        } catch (error) {
-            unauthorizedAccess("Error decoding token, redirecting to login.");
-        }
+       
     });
 
-    function unauthorizedAccess(message) {
-        console.error(message);
-        showUnauthorizedMessage = true;
-        redirectMessage = message;
-        const interval = setInterval(() => {
-            countdown--;
-            if (countdown <= 0) {
-                clearInterval(interval);
-                if (redirectMessage.includes("login")) {
-                    goto('/login');
-                } else {
-                    goto(`/${userRole}`);
-                }
-            }
-        }, 1000);
-    }
 
     async function updateAccount(event) {
         event.preventDefault();
@@ -113,7 +82,7 @@
   <table class="table table-bordered mt-5">
     <thead>
       <tr>
-        <!-- <th>ID</th> -->
+        <th>ID</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Username</th>
@@ -121,13 +90,13 @@
         <th>Created</th>
         <th>Updated</th>
         <th>Status</th>
-        <th>Edit</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       {#each accounts as accountinfo}
         <tr>
-          <!-- <td>{accountinfo.id}</td> -->
+          <td>{accountinfo.id}</td>
           <td>{accountinfo.firstName}</td>
           <td>{accountinfo.lastName}</td>
           <td>{accountinfo.username}</td>
@@ -150,22 +119,13 @@
             >
               Edit
             </button>
-            <button class="btn btn-danger">Delete</button>
+            <!-- <button class="btn btn-danger">Delete</button> -->
           </td>
         
         </tr>
       {/each}
     </tbody>
   </table>
-{/if}
-
-{#if showUnauthorizedMessage}
-<div class="popup" in:fade>
-    <div class="popup-content">
-        <p>{redirectMessage}</p>
-        <p>Redirecting you in {countdown} seconds...</p>
-    </div>
-</div>
 {/if}
 
 <!-- Bootstrap Modal -->
@@ -228,26 +188,6 @@
 {/if}
 
 <style>
-    .popup {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.9);
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
-
-    .popup-content {
-        padding: 20px;
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-        text-align: center;
-    }
 
     .alert {
         margin-top: 10px;

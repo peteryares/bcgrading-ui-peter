@@ -47,7 +47,7 @@
             if (countdown <= 0) {
                 clearInterval(interval);
                 if (redirectMessage.includes("login")) {
-                    goto('/Login');  // Redirect to Login page
+                    goto('/Login');  // Redirect to login page
                 } else {
                     goto(`/${userRole}`);  // Redirect to User Role
                 }

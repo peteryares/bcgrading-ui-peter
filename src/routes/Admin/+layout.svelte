@@ -1,34 +1,19 @@
 <script>
   import 'bootstrap/dist/css/bootstrap.min.css';
   import { onMount } from 'svelte';
-  import { page } from '$app/stores';
-  import { fade } from 'svelte/transition';
   import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
+  import { jwtDecode } from 'jwt-decode';
+  import { fade } from 'svelte/transition';
+ 
 
   let offcanvasElement;
   let bootstrap;  // Variable to hold the imported Bootstrap module
-  // let showLogoutConfirm = false;
-  // on:click={showConfirmLogout}
-
-  
-
-  // Function to handle closing offcanvas
-  function closeOffcanvas() {
-    if (offcanvasElement && bootstrap) {
-      const offcanvasInstance = bootstrap.Offcanvas.getInstance(offcanvasElement);
-      if (offcanvasInstance) {
-        offcanvasInstance.hide();
-      }
-    }
-  }
-
-  // Reactively close offcanvas on route change
-  $: $page.url, closeOffcanvas();
-
-  // Function to show confirmation popup for logout
-  // function showConfirmLogout() {
-  //   showLogoutConfirm = true;
-  // }
+  let error = '';
+  let showUnauthorizedMessage = false;
+  let countdown = 5;
+  let redirectMessage = '';
+  let userRole = '';
 
   // Function to handle logout
   function logout() {
@@ -36,20 +21,57 @@
     goto('/Login');  // Redirect to the login page immediately
   }
 
-  // Function to confirm logout
-  // function confirmLogout() {
-  //   showLogoutConfirm = false;
-  //   closeOffcanvas();
-  //   logout();
-  // }
 
-  // // Function to cancel logout
-  // function cancelLogout() {
-  //   showLogoutConfirm = false;
-  // }
+   // Reactive statement that runs when the URL changes
+   $: if ($page.url.pathname) {
+      const path = $page.url.pathname;
+      const parts = path.split('/').filter(Boolean);
+
+      // Check if the first letter of any part of the path is lowercase
+      const correctedParts = parts.map(part => {
+          return part.charAt(0).toUpperCase() + part.slice(1);
+      });
+
+      const correctedPath = '/' + correctedParts.join('/');
+
+      // If the corrected path is different from the current path, redirect
+      if (correctedPath !== path) {
+          goto(correctedPath);
+      }
+  }
+ 
+
+
+
 
   // Use onMount to handle client-side operations
   onMount(async () => {
+
+    await import('bootstrap/dist/js/bootstrap.bundle.min.js');
+
+      const token = localStorage.getItem('jwtToken');
+
+        if (!token) {
+              unauthorizedAccess("Log-in sa doy redirecting to login...");
+                    return;
+                }
+
+                try {
+          const decodedToken = jwtDecode(token);
+          userRole = decodedToken.role;
+
+          if (userRole !== 'Admin') {
+              redirectMessage = `Role '${userRole}' does not have access to this page.`;
+              unauthorizedAccess("Redirecting you to your role-specific page.");
+              return;
+          }
+
+        } catch (error) {
+          console.error('Error:', error);
+          unauthorizedAccess("Error decoding token, redirecting to login.");
+      }
+
+    
     if (typeof window !== 'undefined') {
       // Dynamically import Bootstrap's JS only in the browser
       bootstrap = await import('bootstrap/dist/js/bootstrap.bundle.min.js');
@@ -75,18 +97,87 @@
         });
       });
     }
+
+
+
+
+     // New logic to enforce uppercase in paths
+     const unsubscribe = page.subscribe(($page) => {
+      if ($page && $page.url && $page.url.pathname) {
+        const path = $page.url.pathname;
+        const parts = path.split('/').filter(Boolean);
+
+        const correctedParts = parts.map(part => {
+          return part.charAt(0).toUpperCase() + part.slice(1);
+        });
+
+        const correctedPath = '/' + correctedParts.join('/');
+
+        if (correctedPath !== path) {
+          goto(correctedPath);
+        }
+      }
+    });
+     // Cleanup subscription on component destroy
+    return () => unsubscribe();
+
   });
+ // Function to handle closing offcanvas
+ function closeOffcanvas() {
+    if (offcanvasElement && bootstrap) {
+      const offcanvasInstance = bootstrap.Offcanvas.getInstance(offcanvasElement);
+      if (offcanvasInstance) {
+        offcanvasInstance.hide();
+      }
+    }
+  }
+
+  // Reactively close offcanvas on route change
+  $: $page.url, closeOffcanvas();
+
+
+
+
+  function unauthorizedAccess(message) {
+      console.error(message);
+      showUnauthorizedMessage = true;
+      redirectMessage = message;
+      const interval = setInterval(() => {
+          countdown--;
+          if (countdown <= 0) {
+              clearInterval(interval);
+              if (redirectMessage.includes("login")) {
+                  goto('/Login');
+              } else {
+                  goto(`/${userRole}`);
+              }
+          }
+      }, 1000);
+  }
+
+
+ 
 
   
 </script>
+{#if showUnauthorizedMessage}
+<div class="popup" in:fade={{ duration: 100 }}>
+    <div class="popup-content">
+        <h1>{redirectMessage}</h1>
+        <h1>wait lang doy mga {countdown} seconds...</h1>
+    </div>
+</div>
+{/if}
+
+
+{#if error}
+    <p>{error}</p>
+{/if}
 
 <nav class="navbar navbar fixed-top custom-navbar-size p-0">
   <div class="container-fluid">
-    <!-- Move the toggler button to the left -->
+
     <div class="d-flex align-items-center gap-2">
-      <!-- <div>
-        <a href="/Admin"><img src="https://cebu.mis.benedictocollege.edu.ph/assets/logo-21a9a44cc070aa7b0436551dba367c97e53bce3864cb2151d4ed24682b8ae540.png" alt="" class="logo"></a>
-      </div> -->
 
       <button class="navbar-toggler bg-transparent navbar-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar">
         <img src="https://assets.website-files.com/62e8f5c9dbfdccaf94d287ac/62ea9a21af559238cc12a830_menu_FILL0_wght400_GRAD0_opsz48%20(2).svg" alt="" class="navbar-toggler-icon navbar-span">
@@ -119,7 +210,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/Admin/addAccount/">
+              <a class="nav-link" href="/Admin/AddAccount/">
                 <img src="/src/lib/images/th-large.svg" alt="" class="box">Add user</a>
             </li>
             <li class="nav-item dropdown">
@@ -131,21 +222,21 @@
               </a>
               <ul class="dropdown-menu bg-transparent">
                 <li><a bind:this={offcanvasElement} class="dropdown-item text-white p-0 py-1 " href="/Admin/Accounts">- View All users</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item text-white p-0 py-1" href="/Admin/updateAccount">- Update User Info</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item text-white p-0 py-1" href="/Admin/updatePassword">- Change Passwords</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item text-white p-0 py-1" href="/Admin/deleteAccount">- Deactivate User</a></li>
-                <li><a bind:this={offcanvasElement} class="dropdown-item text-white p-0 py-1" href="/Admin/reactivateAccount">- Restore User</a></li>
+                <li><a bind:this={offcanvasElement} class="dropdown-item text-white p-0 py-1" href="/Admin/UpdateAccount">- Update User Info</a></li>
+                <li><a bind:this={offcanvasElement} class="dropdown-item text-white p-0 py-1" href="/Admin/UpdatePassword">- Change Passwords</a></li>
+                <li><a bind:this={offcanvasElement} class="dropdown-item text-white p-0 py-1" href="/Admin/DeleteAccount">- Deactivate User</a></li>
+                <li><a bind:this={offcanvasElement} class="dropdown-item text-white p-0 py-1" href="/Admin/ReactivateAccount">- Restore User</a></li>
           
               </ul>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <!-- <img src="/src/lib/images/text-formatting-list-bullets.svg" alt="" class="box"> -->
-               Subject Lists
+               Classes
                <img src="/src/lib/images/nav-arrow-down.svg" alt="">
               </a>
               <ul class="dropdown-menu bg-transparent">
-                <li><a bind:this={offcanvasElement} class="dropdown-item p-0 py-1" href="/Admin">- View All Subjects</a></li>
+                <li><a bind:this={offcanvasElement} class="dropdown-item p-0 py-1" href="/Admin/SubjectList">- View All Subjects</a></li>
                 <!-- <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/updateAccount">Update User Info</a></li>
                 <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/updatePassword">Change Passwords</a></li>
                 <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/deleteAccount">Deactivate User</a></li>
@@ -212,23 +303,33 @@
   </div>
 </div>
 
-<!-- {#if showLogoutConfirm}
-{/if} -->
-
-<!-- <div class="popup" in:fade>
-  <div class="modal-content center">
-  <div class="modal-footer">
-    <p>Are you sure you want to log out?</p>
-    <button class="btn btn-outline-danger" on:click={confirmLogout}>Yes</button>
-    <button class="btn btn-outline-secondary" on:click={cancelLogout}>No</button>
-    <button class="btn btn-outline-success opacity-75" on:click={cancelLogout}>Maybe</button>
-  </div>
-</div>
-</div> -->
 
 
 <style>
+ .popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('/src/lib/images/crying-cat-thumb.jpg');
+        /* background-color: rgb(0, 0, 0,0); */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1050;
+    }
 
+    .popup-content {
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        text-align: center;
+    }
   .custom-offcanvas-size {
     width: 15%; /* Adjust this percentage to control the size of the offcanvas */
     max-width: 15%; /* Ensures the offcanvas doesn't exceed this width */
