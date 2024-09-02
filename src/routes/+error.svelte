@@ -14,7 +14,10 @@
 
     onMount(() => {
         if (typeof window !== 'undefined' && window.history.length > 1) {
-            window.history.back();
+            setTimeout(() => {
+                window.history.back();
+                }, 50); 
+            
         } else {
          
             window.location.href = '/';

@@ -7,9 +7,5 @@
 
 // setTimeout(() => {
 //     window.location.reload();
-// }, 1500); testing
+// }, 1500); 
 
-//test
-
-
-//test
