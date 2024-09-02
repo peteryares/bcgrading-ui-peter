@@ -47,13 +47,13 @@
 
             // Redirect based on the role
             if (role === 'Admin') {
-                goto('/Admin');
+                goto('/admin');
             } else if (role === 'Registrar') {
-                goto('/Registrar');
+                goto('/registrar');
             } else if (role === 'Teacher') {
-                goto('/Teacher');
+                goto('/teacher');
             } else if (role === 'Student') {
-                goto('/Student');
+                goto('/student');
             } else {
                 throw new Error('Unknown role');
             }
