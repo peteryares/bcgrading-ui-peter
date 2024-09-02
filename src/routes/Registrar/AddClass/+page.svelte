@@ -9,9 +9,6 @@
     let subjects = [];
     let error = '';
     let successMessage = '';
-    let showUnauthorizedMessage = false;
-    let countdown = 5;
-    let redirectMessage = '';
     let userRole = '';
 
     let selectedYear = '';
@@ -23,21 +20,11 @@
         await import('bootstrap/dist/js/bootstrap.bundle.min.js');
 
         const token = localStorage.getItem('jwtToken');
+         
 
-        if (!token) {
-            unauthorizedAccess("No token found, redirecting to login.");
-            return;
-        }
-
-        try {
             const decodedToken = jwtDecode(token);
             userRole = decodedToken.role;
 
-            if (userRole !== 'Registrar') {
-                redirectMessage = `Role '${userRole}' does not have access to this page.`;
-                unauthorizedAccess("Redirecting you to your role-specific page.");
-                return;
-            }
 
             const yearlist = await fetch('http://localhost:4000/registrar/years', {
                 headers: {
@@ -75,12 +62,6 @@
                 error = `Failed to fetch subjects: ${subjectlist.statusText}`;
             }
 
-        } catch (error) {
-            console.error('Error:', error);
-
-            console.log(userRole);
-            unauthorizedAccess("Error decoding token, redirecting to login.");
-        }
     });
 
     async function addClass() {
@@ -125,22 +106,6 @@
         }
     }
 
-    function unauthorizedAccess(message) {
-        console.error(message);
-        showUnauthorizedMessage = true;
-        redirectMessage = message;
-        const interval = setInterval(() => {
-            countdown--;
-            if (countdown <= 0) {
-                clearInterval(interval);
-                if (redirectMessage.includes("login")) {
-                    goto('/login');
-                } else {
-                    goto(`/${userRole}`);
-                }
-            }
-        }, 1000);
-    }
 </script>
 
 <div class="container mt-4" style="height: 70vh;">

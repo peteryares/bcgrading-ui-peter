@@ -1,55 +1,62 @@
 <script>
     import 'bootstrap/dist/css/bootstrap.min.css';
     import { onMount } from 'svelte';
-    import { page } from '$app/stores';
-    import { fade } from 'svelte/transition';
     import { goto } from '$app/navigation';
-  
+    import { page } from '$app/stores';
+    import { jwtDecode } from 'jwt-decode';
+    import { fade } from 'svelte/transition';
+
+
     let offcanvasElement;
     let bootstrap;  // Variable to hold the imported Bootstrap module
-    // let showLogoutConfirm = false;
-    // on:click={showConfirmLogout}
-  
-    
-  
-    // Function to handle closing offcanvas
-    function closeOffcanvas() {
-      if (offcanvasElement && bootstrap) {
-        const offcanvasInstance = bootstrap.Offcanvas.getInstance(offcanvasElement);
-        if (offcanvasInstance) {
-          offcanvasInstance.hide();
-        }
-      }
-    }
-  
-    // Reactively close offcanvas on route change
-    $: $page.url, closeOffcanvas();
-  
-    // Function to show confirmation popup for logout
-    // function showConfirmLogout() {
-    //   showLogoutConfirm = true;
-    // }
-  
+    let error = '';
+    let showUnauthorizedMessage = false;
+    let countdown = 5;
+    let redirectMessage = '';
+    let userRole = '';
+
     // Function to handle logout
     function logout() {
       localStorage.removeItem('jwtToken');  // Clear the JWT token
-      goto('/login');  // Redirect to the login page immediately
+      goto('/Login');  // Redirect to the login page immediately
     }
   
-    // Function to confirm logout
-    // function confirmLogout() {
-    //   showLogoutConfirm = false;
-    //   closeOffcanvas();
-    //   logout();
-    // }
   
-    // // Function to cancel logout
-    // function cancelLogout() {
-    //   showLogoutConfirm = false;
-    // }
+    
+  
+   
+
+ 
+  
   
     // Use onMount to handle client-side operations
     onMount(async () => {
+
+      await import('bootstrap/dist/js/bootstrap.bundle.min.js');
+
+        const token = localStorage.getItem('jwtToken');
+
+          if (!token) {
+                unauthorizedAccess("Log-in sa doy redirecting to login...");
+                      return;
+                  }
+
+                  try {
+            const decodedToken = jwtDecode(token);
+            userRole = decodedToken.role;
+
+            if (userRole !== 'Registrar') {
+                redirectMessage = `Role '${userRole}' does not have access to this page.`;
+                unauthorizedAccess("Redirecting you to your role-specific page.");
+                return;
+            }
+
+          } catch (error) {
+            console.error('Error:', error);
+            unauthorizedAccess("Error decoding token, redirecting to login.");
+        }
+
+      
       if (typeof window !== 'undefined') {
         // Dynamically import Bootstrap's JS only in the browser
         bootstrap = await import('bootstrap/dist/js/bootstrap.bundle.min.js');
@@ -75,18 +82,83 @@
           });
         });
       }
+
+
+
     });
+   // Function to handle closing offcanvas
+   function closeOffcanvas() {
+      if (offcanvasElement && bootstrap) {
+        const offcanvasInstance = bootstrap.Offcanvas.getInstance(offcanvasElement);
+        if (offcanvasInstance) {
+          offcanvasInstance.hide();
+        }
+      }
+    }
   
+    // Reactively close offcanvas on route change
+    $: $page.url, closeOffcanvas();
+  
+
+
+
+    function unauthorizedAccess(message) {
+        console.error(message);
+        showUnauthorizedMessage = true;
+        redirectMessage = message;
+        const interval = setInterval(() => {
+            countdown--;
+            if (countdown <= 0) {
+                clearInterval(interval);
+                if (redirectMessage.includes("login")) {
+                    goto('/Login');
+                } else {
+                    goto(`/${userRole}`);
+                }
+            }
+        }, 1000);
+    }
+
+
+      // Reactive statement that runs when the URL changes
+      $: if ($page.url.pathname) {
+        const path = $page.url.pathname;
+        const parts = path.split('/').filter(Boolean);
+
+        // Check if the first letter of any part of the path is lowercase
+        const correctedParts = parts.map(part => {
+            return part.charAt(0).toUpperCase() + part.slice(1);
+        });
+
+        const correctedPath = '/' + correctedParts.join('/');
+
+        // If the corrected path is different from the current path, redirect
+        if (correctedPath !== path) {
+            goto(correctedPath);
+        }
+    }
+
     
   </script>
+  {#if showUnauthorizedMessage}
+  <div class="popup" in:fade={{ duration: 100 }}>
+      <div class="popup-content">
+          <h1>{redirectMessage}</h1>
+          <h1>wait lang doy mga {countdown} seconds...</h1>
+      </div>
+  </div>
+  {/if}
   
+  
+  {#if error}
+      <p>{error}</p>
+  {/if}
+    
   <nav class="navbar fixed-top custom-navbar-size">
     <div class="container-fluid">
       <!-- Move the toggler button to the left -->
       <div class="d-flex align-items-center gap-2">
-        <div>
-          <a href="/Registrar"><img src="https://cebu.mis.benedictocollege.edu.ph/assets/logo-21a9a44cc070aa7b0436551dba367c97e53bce3864cb2151d4ed24682b8ae540.png" alt="" class="logo"></a>
-        </div>
+        <!-- <div> <a href="/Registrar"><img src="https://cebu.mis.benedictocollege.edu.ph/assets/logo-21a9a44cc070aa7b0436551dba367c97e53bce3864cb2151d4ed24682b8ae540.png" alt="" class="logo"></a> </div> -->
   
         <button class="navbar-toggler bg-transparent navbar-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar">
           <img src="https://assets.website-files.com/62e8f5c9dbfdccaf94d287ac/62ea9a21af559238cc12a830_menu_FILL0_wght400_GRAD0_opsz48%20(2).svg" alt="" class="navbar-toggler-icon navbar-span">
@@ -98,37 +170,7 @@
         <img src="/src/lib/images/profile-circle.svg" alt="" class="profile">
       </div>
       
-      <!-- Offcanvas Menu -->
-      <!-- <div bind:this={offcanvasElement} class="offcanvas offcanvas-start text-white custom-offcanvas-size navbar" tabindex="-1" id="offcanvasDarkNavbar">
-        <div class="offcanvas-header">
-          <img src="/src/lib/images/profile-circle.svg" alt="" class="profile">
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-          <nav>
-            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-              <li class="nav-item">
-                <a class="nav-link active" href="/Registrar">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/Registrar/ClassList/">List of Classes </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/Registrar/AddSubject/">Add Subjects</a>
-              </li>
-           
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-            
-            </ul>
-          </nav>
-        
-          <button type="button" class="nav-link btn btn-md btn-danger p-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            Logout 
-             </button>
-        </div>
-      </div> -->
+
 
       <div bind:this={offcanvasElement} class="offcanvas offcanvas-start text-white custom-offcanvas-size " tabindex="-1" id="offcanvasDarkNavbar">
         <div class="offcanvas-header">
@@ -228,23 +270,34 @@
     </div>
   </div>
   
-  <!-- {#if showLogoutConfirm}
-  {/if} -->
+
   
-  <!-- <div class="popup" in:fade>
-    <div class="modal-content center">
-    <div class="modal-footer">
-      <p>Are you sure you want to log out?</p>
-      <button class="btn btn-outline-danger" on:click={confirmLogout}>Yes</button>
-      <button class="btn btn-outline-secondary" on:click={cancelLogout}>No</button>
-      <button class="btn btn-outline-success opacity-75" on:click={cancelLogout}>Maybe</button>
-    </div>
-  </div>
-  </div> -->
-  
-  
+
   <style>
-  
+   .popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('/src/lib/images/crying-cat-thumb.jpg');
+        /* background-color: rgb(0, 0, 0,0); */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1050;
+    }
+
+    .popup-content {
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        text-align: center;
+    }
     .custom-offcanvas-size {
       width: 15%; /* Adjust this percentage to control the size of the offcanvas */
       max-width: 15%; /* Ensures the offcanvas doesn't exceed this width */

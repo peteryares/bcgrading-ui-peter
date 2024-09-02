@@ -33,7 +33,7 @@
   // Function to handle logout
   function logout() {
     localStorage.removeItem('jwtToken');  // Clear the JWT token
-    goto('/login');  // Redirect to the login page immediately
+    goto('/Login');  // Redirect to the login page immediately
   }
 
   // Function to confirm logout

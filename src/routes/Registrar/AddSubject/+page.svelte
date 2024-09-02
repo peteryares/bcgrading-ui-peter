@@ -1,22 +1,14 @@
 <script>
-    import { onMount } from 'svelte';
+ 
     import { goto } from '$app/navigation';
 
     let subjectcode = '';
     let title = '';
-    // let username = '';
-    // let password = '';
-    // let confirmPassword = '';
-
     let message = '';
 
   
-
     async function handleSubmit() {
-        // if (password !== confirmPassword) {
-        //     message = "Passwords do not match.";
-        //     return;
-        // }
+     
 
         // Retrieve JWT token from localStorage
         const token = localStorage.getItem('jwtToken');
@@ -128,59 +120,6 @@
 {#if message}
     <p>{message}</p>
 {/if}
-
-
-
-
-<!-- 
-<div class="row">
-
-    <div class="col-md-6 mb-4"> 
-        <div data-mdb-input-init class="form-outline">
-            <label class="form-label" for="firstName" >First Name:</label>
-            <input type="text" class="form-control form-control-md" placeholder="First Name" style="position:relative;"  bind:value={firstName} required />
-        </div></div>    
-             
-<div class="col-md-6 mb-4">
-    <div data-mdb-input-init class="form-outline">
-        <label class="form-label" for="lastName">Last Name:</label>
-    <input id="lastName" type="text" class="form-control form-control-md" placeholder="Last Name" bind:value={lastName} required />
-    </div></div>
-
-</div>  
-
-<div class="row">
-    <div class="col-md-6 mb-4">
-        <div data-mdb-input-init class="form-outline">
-        <label class="form-label" for="password">Password:</label>
-        <input class="form-control form-control-md" placeholder="password" id="password" type="password" bind:value={password} required />
-    </div></div>
-    
-    
-    <div class="col-md-6 mb-4">
-    <div data-mdb-input-init class="form-outline">
-    <label class="form-label" for="confirmPassword">Confirm Password:</label>
-    <input class="form-control form-control-md" placeholder="ConfirmPassword" id="confirmPassword" type="password" bind:value={confirmPassword} required />
-    </div></div>
-    
-    
-    </div>
-    
-    
-    
-    <div class="row">
-    <div class="col-10 ">
-        <label class="form-label select-label" for="role">Role:</label>
-        <select class="form-select" id="role"  bind:value={role}>
-            {#each roles as r}
-                <option value={r}>{r}</option>
-            {/each}
-        </select>
-    </div>
-    </div>
-     -->
-
-
 
 
 <style>

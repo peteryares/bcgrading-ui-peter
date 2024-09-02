@@ -47,7 +47,7 @@
             if (countdown <= 0) {
                 clearInterval(interval);
                 if (redirectMessage.includes("login")) {
-                    goto('/login');  // Redirect to login page
+                    goto('/Login');  // Redirect to Login page
                 } else {
                     goto(`/${userRole}`);  // Redirect to User Role
                 }
@@ -57,7 +57,7 @@
 
     function logout() {
     localStorage.removeItem('jwtToken');  // Clear the JWT token
-    goto('/login');  // Redirect to the login page immediately
+    goto('/Login');  // Redirect to the login page immediately
 }
 function showConfirmLogout() {
         showLogoutConfirm = true;
