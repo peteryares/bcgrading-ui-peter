@@ -1,7 +1,6 @@
 <script>
     import 'bootstrap/dist/css/bootstrap.min.css';
     import { onMount } from 'svelte';
-    import { goto } from '$app/navigation';
     import { jwtDecode } from 'jwt-decode';
 
     let years = [];
@@ -15,7 +14,8 @@
     let selectedYear = '';
     let selectedSemester = '';
     let selectedSubject = '';
-    let teacherId = ''; // Assume this will be provided by the user or another API call
+    let teacherId = ''; 
+
 
     onMount(async () => {
         await import('bootstrap/dist/js/bootstrap.bundle.min.js');
@@ -96,8 +96,8 @@
 
             if (response.ok) {
                 successMessage = `Class added successfully!
-                [${selectedSubject}] [Year: ${selectedYear}] [Semester: ${selectedSemester}] [Teacher ID: ${teacherId}]`;
-
+                [SUBJECT: ${selectedSubject}] [Year: ${selectedYear}] [Semester: ${selectedSemester}] `;
+                // [Teacher ID: ${teacherId}]
                 // Hide the success message after 5 seconds
                 setTimeout(() => {
                     successMessage = '';
@@ -108,6 +108,7 @@
                 selectedSemester = '';
                 selectedSubject = '';
                 teacherId = '';
+                
             } else {
                 error = `Failed to add class: ${response.statusText}`;
                 setTimeout(() => {
@@ -119,13 +120,14 @@
         }
     }
 
+
 </script>
 
 <div class="container mt-4" style="height: 70vh;">
     <h2>Add Class</h2>
 
     {#if successMessage}
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-success text-bold" role="alert">
             {successMessage}
         </div>
     {/if}
@@ -179,7 +181,7 @@
             <select id="teacherId" class="form-select" bind:value={teacherId} required size="1" style="max-height: 150px; overflow-y: auto;">
                 <option value="">Choose...</option>
                 {#each teachers as teacher}
-                    <option value={teacher.id}> {teacher.firstName} {teacher.lastName}</option>
+                    <option value={teacher.id} > {teacher.firstName} {teacher.lastName}</option>
                 {/each}
             </select>
         </div>
