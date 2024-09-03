@@ -237,6 +237,11 @@
               </a>
               <ul class="dropdown-menu bg-transparent">
                 <li><a bind:this={offcanvasElement} class="dropdown-item p-0 py-1" href="/Admin/SubjectList">- View All Subjects</a></li>
+                <li class="nav-item">
+                  <a bind:this={offcanvasElement} class="dropdown-item p-0 py-1" href="/Admin/ClassList" >
+                    
+                    List of Classes </a>
+                </li>
                 <!-- <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/updateAccount">Update User Info</a></li>
                 <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/updatePassword">Change Passwords</a></li>
                 <li><a bind:this={offcanvasElement} class="dropdown-item" href="/Admin/deleteAccount">Deactivate User</a></li>
