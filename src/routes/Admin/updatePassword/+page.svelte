@@ -1,33 +1,30 @@
 <script>
     import 'bootstrap/dist/css/bootstrap.min.css';
     import { onMount } from 'svelte';
-    import { goto } from '$app/navigation';
-    import { fade } from 'svelte/transition';
     import { jwtDecode } from 'jwt-decode';
     import { writable } from 'svelte/store'; // Import writable from svelte/store
 
     let accounts = [];
     let error = '';
-    let showUnauthorizedMessage = false;
-    let countdown = 5;
-    let redirectMessage = '';
     let userRole = '';
     const selectedAccount = writable(null); // Initialize writable store
     let passwordError = ''; // New state for password error
     let passwordSuccessMessage = ''; // New state for password success message
-   
-    let bootstrap;
+   let bootstrap ='';
+
 
     onMount(async () => {
         const bootstrapModule = await import('bootstrap/dist/js/bootstrap.bundle.min.js');
         bootstrap = bootstrapModule.default;
 
         const token = localStorage.getItem('jwtToken');
-      
+  
+     
             const decodedToken = jwtDecode(token);
             userRole = decodedToken.role;
 
-       
+          
+
             const userlist = await fetch('http://localhost:4000/admin', {
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -39,8 +36,9 @@
             } else {
                 error = `Failed to fetch accounts: ${userlist.statusText}`;
             }
-      
+       
     });
+
 
     async function changePassword(event) {
         event.preventDefault();
@@ -182,10 +180,4 @@
     </div>
 </div>
 
-{#if error}
-    <p>{error}</p>
-{/if}
 
-<style>
-  
-</style>

@@ -78,6 +78,15 @@
 
 
 <h1 class="text-center">Update Accounts</h1>
+{#if successMessage}
+<div class="alert alert-success" role="alert">
+    {successMessage}
+</div>
+{/if}
+
+{#if error}
+    <p>{error}</p>
+{/if}
 {#if !error}
   <table class="table table-bordered mt-5">
     <thead>
@@ -175,17 +184,7 @@
   </div>
 </div>
 
-<!-- Success message after update -->
-{#if successMessage}
-<div class="alert alert-success" role="alert">
-    {successMessage}
-</div>
-{/if}
 
-<!-- Error message if any -->
-{#if error}
-    <p>{error}</p>
-{/if}
 
 <style>
 

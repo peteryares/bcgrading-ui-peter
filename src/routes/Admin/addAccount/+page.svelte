@@ -9,6 +9,8 @@
     let confirmPassword = '';
     let role = ''; // Default role
     let message = '';
+    let successMessage = ''; // For success message
+    let errorMessage = ''; // For error message
 
     const roles = ['Admin', 'Registrar', 'Student', 'Teacher'];
 
@@ -37,20 +39,27 @@
                     role
                 })
             });
+            // const result = await response.json();
+            successMessage = 'Account created successfully!';
+            errorMessage = ''; // Clear any previous error messages
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Error creating account');
-            }
+            // Optionally, clear the form fields
+            firstName = '';
+            lastName = '';
+            username = '';
+            password = '';
+            confirmPassword = '';
+            role = '';
 
-            const result = await response.json();
-            message = 'Account created successfully!';
-            goto('/Admin/AddAccount'); // Redirect to a success page or dashboard
+            // Redirect after a short delay
+            setTimeout(() => {
+                window.location.reload();
+            }, 3000); // 3 seconds delay
         } catch (error) {
-            message = error.message || 'Error creating account';
+            errorMessage = error.message || 'Error creating account';
+            successMessage = ''; // Clear any previous success messages
         }
     }
-
 
    
 </script>
@@ -62,7 +71,13 @@
     <div class="col-4">
         <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
             <div class="card-body p-4">
-                <!-- <h3 class="mb-3 pb-2 pb-md-0 mb-md-5">Add Account Details Form</h3> -->
+                <!-- Success and Error Messages -->
+                {#if errorMessage}
+                    <div class="alert alert-danger">{errorMessage}</div>
+                {/if}
+                {#if successMessage}
+                    <div class="alert alert-success">{successMessage}</div>
+                {/if}
 
 <form class="form-inline" on:submit|preventDefault={handleSubmit}>
     <div class="row">

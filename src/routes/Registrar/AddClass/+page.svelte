@@ -7,6 +7,7 @@
     let years = [];
     let semesters = [];
     let subjects = [];
+    let teachers = [];
     let error = '';
     let successMessage = '';
     let userRole = '';
@@ -60,6 +61,18 @@
                 subjects = await subjectlist.json();
             } else {
                 error = `Failed to fetch subjects: ${subjectlist.statusText}`;
+            }
+
+            const teacherlist = await fetch('http://localhost:4000/registrar/teacherlist', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (teacherlist.ok) {
+                teachers = await teacherlist.json();
+            } else {
+                error = `Failed to fetch teachers: ${teacherlist.statusText}`;
             }
 
     });
@@ -155,11 +168,22 @@
         </select>
     </div>
     
-    <div class="mb-3">
+    <!-- <div class="mb-3">
         <label for="teacherId" class="form-label">Teacher ID</label>
         <input type="text" id="teacherId" class="form-control" bind:value={teacherId} required placeholder="Enter Teacher ID" />
-    </div>
+    </div> -->
     
+    <div class="mb-3">
+        <label for="teacherId" class="form-label">Select Teacher</label>
+        <div class="dropdown">
+            <select id="teacherId" class="form-select" bind:value={teacherId} required size="1" style="max-height: 150px; overflow-y: auto;">
+                <option value="">Choose...</option>
+                {#each teachers as teacher}
+                    <option value={teacher.id}> {teacher.firstName} {teacher.lastName}</option>
+                {/each}
+            </select>
+        </div>
+    </div>
 
     <button class="btn btn-primary" on:click={addClass}>Add Class</button>
 </div>
