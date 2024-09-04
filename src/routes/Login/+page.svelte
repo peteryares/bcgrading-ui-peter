@@ -133,7 +133,10 @@
       <div class="col-sm-5 text-black">
 
         <div class="px-5 ms-xl-4 mt-5">
-          <img src="/src/lib/images/bc-logo.png" alt="" class="logo">
+        
+          <div class="Logo1"><img src="/src/lib/images/bc-logo.png" alt="" class="logo">Your Education is our mission!</div>
+          
+          <div class="name_logo">Login Here!</div>
         </div>
 
         <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
@@ -199,18 +202,31 @@
   margin: 0;
 }
 
+/* update gamay */
+.Logo1{
+  margin-left: 1rem;
+}
 
 .logo{
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
+  font-weight: 700;
 }
+
+/* ari kutob */
 
 section{
   background-color: rgba(255, 255, 255, 0.35);
 }
 
+.name_logo{
+  margin-left: 4rem;
+  font-size: 3rem;
+}
+
 .form-control{
   outline: none !important;
+  justify-content: center;
 }
 
 label{
