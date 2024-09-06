@@ -183,7 +183,7 @@
           alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: center;"> -->
 
           <img src="https://mis.benedictocollege.edu.ph/assets/bene-school-815be6299a10bcc76c09c819b5a1f49beb216565f77ba611270de3b63f1b33f6.jpg"
-          alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: center">
+          alt="Login_image" class="w-100 vh-100" style="object-fit: cover; object-position: center">
       </div>
     </div>
   </div>
@@ -232,5 +232,11 @@ section{
 label{
   color: gray !important;
 }
+
+
+#Login_image{
+  
+}
+
 
 </style>
